@@ -15,6 +15,30 @@ class SpecificPiece{
   * -- 1 PieceType;
 }
 
+class Pawn{
+  isA SpecificPiece;
+}
+
+class Rook{
+  isA SpecificPiece;
+}
+
+class Knight{
+  isA SpecificPiece;
+}
+
+class Bishop{
+  isA SpecificPiece;
+}
+
+class Queen{
+  isA SpecificPiece;
+}
+
+class King{
+  isA SpecificPiece;
+}
+
 class Player{
   name;
   colour;
