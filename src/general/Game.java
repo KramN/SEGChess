@@ -2,7 +2,7 @@ package general;
 
 import java.util.*;
 
-public class Game {
+public abstract class Game {
 	
 	//------------------------
 	// MEMBER VARIABLES
@@ -21,5 +21,14 @@ public class Game {
 		players = new ArrayList<Player>();
 	}
 	
+	public abstract void setupBoard();
+	
+	public String toString(){
+		String result;
+		
+		result = board.toString();
+		
+		return result;
+	}
 
 }

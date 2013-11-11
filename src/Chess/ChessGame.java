@@ -1,4 +1,4 @@
-package Chess;
+package chess;
 
 import general.Board;
 import general.Game;
@@ -12,6 +12,4 @@ public class ChessGame extends Game {
 	public void setupBoard(){
 		board = new Board(this, 8, 8);
 	}
-	
-
 }

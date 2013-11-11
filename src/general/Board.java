@@ -26,6 +26,8 @@ public class Board {
 		squares = new ArrayList<Square>();
 		specificPieces = new ArrayList<SpecificPiece>();
 		game = aGame;
+		this.rows = rows;
+		this.cols = cols;
 		setupBoard(rows, cols);
 	}
 	
@@ -47,10 +49,6 @@ public class Board {
 			}
 		}
 		return result;
-	}
-	
-	public static void main(String[] args){
-		
 	}
 	
 }
