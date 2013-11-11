@@ -14,7 +14,9 @@ public class Board {
 	
 	//Board Associations
 	private List<Square> squares;
-	private List<SpecificPiece> specificPieces;
+	private List<SpecificPiece> specificPieces; 
+		//do captured pieces remain in this list?
+		//should the index of a given piece match the index of it's square's index in the square list?
 	private Game game;
 	
 	//------------------------
@@ -39,6 +41,26 @@ public class Board {
 		}
 	}
 	
+	//GETTERS
+	public Square getSquare(int row, int col){
+		return squares.get(row*rows + col);
+	}
+	
+	//could be useless and bad
+	//restricts the board to be applicable only to rectangular grid games
+	public int getListIndex(int row, int col){
+		return row*rows + col;
+	}
+	
+	//SETTERS
+	public void setPieceAt(int row, int col, SpecificPiece aPiece){
+		getSquare(row, col).setPiece(aPiece);
+		specificPieces.add(aPiece); 
+	}
+	
+	
+	//INSTANCE METHODS
+	
 	public String toString(){
 		String result = "";
 		
@@ -52,3 +74,4 @@ public class Board {
 	}
 	
 }
+

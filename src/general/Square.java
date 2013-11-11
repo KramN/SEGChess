@@ -15,6 +15,13 @@ public class Square {
 	public Square(int xCoord, int yCoord){
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		hasPiece = false;
+	}
+	
+	public void setPiece(SpecificPiece piece){
+		//handle the case when there is already a piece occupying the square
+		thePiece = piece;
+		hasPiece = true;
 	}
 	
 	public String toString(){
