@@ -1,4 +1,7 @@
-package general;
+package Chess;
+
+import general.Board;
+import general.Game;
 
 public class ChessGame extends Game {
 	

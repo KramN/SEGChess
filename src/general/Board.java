@@ -9,6 +9,9 @@ public class Board {
 	// MEMBER VARIABLES
 	//------------------------
 	
+	private int rows, cols;
+
+	
 	//Board Associations
 	private List<Square> squares;
 	private List<SpecificPiece> specificPieces;
@@ -32,6 +35,22 @@ public class Board {
 				squares.add(new Square(i, j));
 			}
 		}
+	}
+	
+	public String toString(){
+		String result = "";
+		
+		for (int i = 0; i < rows; i++){
+			result += System.getProperty("line.separator");
+			for (int j = 0; j < cols; j++){
+				result += " " + squares.get(i*cols + j);
+			}
+		}
+		return result;
+	}
+	
+	public static void main(String[] args){
+		
 	}
 	
 }
