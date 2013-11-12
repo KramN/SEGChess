@@ -15,8 +15,8 @@ public class Board {
 	//Board Associations
 	private List<Square> squares;
 	private List<SpecificPiece> specificPieces; 
-		//do captured pieces remain in this list?
-		//should the index of a given piece match the index of it's square's index in the square list?
+		//do captured pieces remain in this list? **Yes**
+		//should the index of a given piece match the index of it's square's index in the square list? **No**
 	private Game game;
 	
 	//------------------------
@@ -47,7 +47,7 @@ public class Board {
 	}
 	
 	//could be useless and bad
-	//restricts the board to be applicable only to rectangular grid games
+	//restricts the board to be applicable only to rectangular grid games **Should it be (row*cols + col)?**
 	public int getListIndex(int row, int col){
 		return row*rows + col;
 	}
@@ -67,7 +67,7 @@ public class Board {
 		for (int i = 0; i < rows; i++){
 			result += System.getProperty("line.separator");
 			for (int j = 0; j < cols; j++){
-				result += " " + squares.get(i*cols + j);
+				result += " " + squares.get(i*cols + j); //Calls the Square at position (i, j)'s toString()
 			}
 		}
 		return result;

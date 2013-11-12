@@ -2,14 +2,14 @@ package chess.piece;
 
 import general.*;
 
-public class Knight extends SpecificPiece {
-	// CONSTRUCTORS
-	public Knight(Square square){
-		super(square);
-	}
+public class Knight extends PieceType {
+//	// CONSTRUCTORS
+//	public Knight(Square square){
+//		super(square);
+//	}
 
 	// INSTANCE METHODS
 	public String toString(){
-		return "H"; // "H" for horse due to conflict with king
+		return "N"; // "N" is standard for knight
 	}
 }
