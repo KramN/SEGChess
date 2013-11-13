@@ -6,15 +6,12 @@ public class Square {
 	//------------------------
 	// MEMBER VARIABLES
 	//------------------------
-	int xCoord, yCoord;
 	boolean hasPiece;
 	
 	//Square Associations
 	SpecificPiece thePiece;
 
-	public Square(int xCoord, int yCoord){
-		this.xCoord = xCoord;
-		this.yCoord = yCoord;
+	public Square(){
 		hasPiece = false;
 	}
 	
@@ -22,6 +19,14 @@ public class Square {
 		//handle the case when there is already a piece occupying the square
 		thePiece = piece;
 		hasPiece = true;
+	}
+	
+	public SpecificPiece removePiece(){
+		//Check for no piece existing. Throw exception if no piece.
+		SpecificPiece temp = thePiece;
+		thePiece = null;
+		hasPiece = false;
+		return temp;
 	}
 	
 	public String toString(){

@@ -13,7 +13,7 @@ public abstract class Game {
 
 	//Game Associations
 	protected Board board;
-	private List<Player> players;
+	protected List<Player> players;
 	
 	public Game(String aName)
 	{
@@ -22,6 +22,10 @@ public abstract class Game {
 	}
 	
 	public abstract void setupBoard();
+	
+	public void movePiece(int startX, int startY, int endX, int endY){
+		board.movePiece(startX, startY, endX, endY);
+	}
 	
 	public String toString(){
 		String result;
