@@ -46,7 +46,37 @@ public class GameClient extends AbstractClient {
 
 	///////////////// END HOOK METHODS ///////////////////////
 
-
+	/**
+	 * This method handles all data coming from the UI            
+	 *
+	 * @param message The message from the UI.    
+	 */
+	public void handleMessageFromClientUI(String message)
+	{
+		try
+		{
+			sendToServer(message);
+		}
+		catch(IOException e)
+		{
+			clientUI.displayMessage
+			("Could not send message to server.  Terminating client.");
+			quit();
+		}
+	}
+	
+	/**
+	 * This method terminates the client.
+	 */
+	public void quit()
+	{
+		try
+		{
+			closeConnection();
+		}
+		catch(IOException e) {}
+		System.exit(0);
+	}
 
 
 

@@ -58,7 +58,9 @@ public class GameServer extends AbstractServer {
 	   * connections.  The default implementation does nothing.
 	   * The method may be overridden by subclasses.
 	   */
-	  protected void serverStarted() {}
+	  protected void serverStarted() {
+		  System.out.println("Listening for connections on port " + getPort());
+	  }
 
 	  /**
 	   * Hook method called when the server stops accepting
