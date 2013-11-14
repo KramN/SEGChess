@@ -95,7 +95,7 @@ public class GameServer extends AbstractServer {
 	   */
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		// TODO Auto-generated method stub
+		System.out.println(client + " : " + msg);
 
 	}
 	

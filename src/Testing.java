@@ -3,6 +3,7 @@ import general.*;
 
 
 public class Testing {
+	
 
 	public static void main(String[] args){
 		Game theGame = new ChessGame("Test");
@@ -17,5 +18,6 @@ public class Testing {
 		// Test moving pieces.
 		theGame.movePiece(3, 4, 7, 4);
 		System.out.println(theGame);
+		
 	}
 }
