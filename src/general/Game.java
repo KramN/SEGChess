@@ -21,7 +21,17 @@ public abstract class Game {
 		players = new ArrayList<Player>();
 	}
 	
+	// ABSTRACT METHODS
 	public abstract void setupBoard();
+	public abstract boolean addPlayer(Player aPlayer);
+	
+	
+	//CLASS METHODS
+	public int numberOfPlayers()
+	  {
+	    int number = players.size();
+	    return number;
+	  }
 	
 	public void movePiece(int startX, int startY, int endX, int endY){
 		board.movePiece(startX, startY, endX, endY);

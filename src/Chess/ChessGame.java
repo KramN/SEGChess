@@ -8,6 +8,8 @@ public class ChessGame extends Game {
 	
 	public ChessGame(String name){
 		super(name);
+		colourList.add(new Colour("White"));
+		colourList.add(new Colour("Black"));
 	}
 	
 	public void setupBoard(){
@@ -19,6 +21,25 @@ public class ChessGame extends Game {
 		//will need to have set the players (white and black) at this point to properly construct piece objects
 		initializeChessBoard();
 	}
+	
+	public boolean addPlayer(Player aPlayer)
+	{
+		boolean wasAdded = false;
+		if (players.contains(aPlayer)) { return false; }
+		if (numberOfPlayers() >= maximumNumberOfPlayers())
+		{
+			return wasAdded;
+		}
+
+		players.add(aPlayer);
+		
+		return wasAdded;
+	}
+	
+	  public static int maximumNumberOfPlayers()
+	  {
+	    return 2;
+	  }
 	
 	private void initializeChessBoard(){
 		board.addPieceType(new Pawn(board));

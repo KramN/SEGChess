@@ -13,3 +13,5 @@ Colour Class? Probably not.
 Need to consider restart game. Idea: board.clearBoard() then board.init().
 
 Currently the player who sets up the game is white.
+
+Law of Demeter broken in getIndexOfGame in GameServer class.

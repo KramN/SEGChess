@@ -127,7 +127,7 @@ public class GameServer extends AbstractServer {
 	//restart
 	
 	private enum Command{
-		JOIN, MOVE, NEWGAME
+		JOIN, MOVE, NEWCHESS
 	}
 
 	/**
@@ -168,12 +168,12 @@ public class GameServer extends AbstractServer {
 		
 		switch (command) {
 		case JOIN:
-			
+			joinGame(parameter, client);
 		case MOVE:
 			//handleMove(command);
 			break;
-		case NEWGAME:
-			startNewGame(parameter, client);
+		case NEWCHESS:
+			newChessGame(parameter, client);
 			break;
 			default:
 				//no default.
@@ -206,16 +206,57 @@ public class GameServer extends AbstractServer {
 	    }
 	  }
 	
-	
+	private int getIndexOfGame(String name){
+		int index = -1;
+		
+		for (int i = 0; i < game.size(); i++){
+			if (game.get(i).getName().equals(name)){
+				index = i;
+			}
+		}
+		
+		return index;
+	}
 
 	
-
+	private void joinGame(String name, ConnectionToClient client){
+		
+		
+		int index = getIndexOfGame(name);
+		
+		if (index == -1){
+			try{
+				client.sendToClient("Game does not exist.");
+				return;
+			} catch (IOException e){
+				System.out.println("Unable to send non-existant game name error to client");
+			}
+		}
+		
+		Game theGame = game.get(index);
+		Player thePlayer = new Player();
+		
+		
+		boolean added = theGame.addPlayer(thePlayer);
+		if (added){
+			client.setInfo("Game", theGame);
+			client.setInfo("Player", thePlayer);
+		} else {
+			try {
+				client.sendToClient("Unable to join game. Likely full.");
+			} catch(IOException e){
+				System.out.println("Unable to send join game error to client");
+			}
+		}
+		
+	}
 	
 	private void handleMove(){
 		
 	}
 	
-	private void startNewGame(String name, ConnectionToClient client){
+	
+	private void newChessGame(String name, ConnectionToClient client){
 		if (name.equals("")){
 			try{
 				client.sendToClient("Invalid game name");
@@ -225,10 +266,21 @@ public class GameServer extends AbstractServer {
 			}
 		}
 		
-		//Currently only capable of handling chess games.
+		//Checks to see if game name already taken.
+		if (game.contains(name)){
+			try{
+				client.sendToClient("Game name already taken.");
+				return;
+			} catch (IOException e){
+				System.out.println("Unable to send duplicate game name error to client");
+			}
+		}
+		
 		Game theGame = new ChessGame(name);
 		Player thePlayer = new Player();
+		
 		game.add(theGame);
+		theGame.addPlayer(thePlayer);
 		
 		client.setInfo("Game", theGame);
 		client.setInfo("Player", thePlayer);
