@@ -14,11 +14,13 @@ public abstract class Game {
 	//Game Associations
 	protected Board board;
 	protected List<Player> players;
+	protected List<Colour> colourList;
 	
 	public Game(String aName)
 	{
 		name = aName;
 		players = new ArrayList<Player>();
+		colourList = new ArrayList<Colour>();
 	}
 	
 	// ABSTRACT METHODS

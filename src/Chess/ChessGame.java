@@ -3,6 +3,7 @@ package chess;
 
 import general.*;
 import chess.piece.*;
+import java.util.*;
 
 public class ChessGame extends Game {
 	
@@ -49,7 +50,7 @@ public class ChessGame extends Game {
 		board.addPieceType(new Queen(board));
 		board.addPieceType(new King(board));
 		
-		board.init();
+		board.init(colourList);
 		
 
 	}

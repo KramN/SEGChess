@@ -15,3 +15,5 @@ Need to consider restart game. Idea: board.clearBoard() then board.init().
 Currently the player who sets up the game is white.
 
 Law of Demeter broken in getIndexOfGame in GameServer class.
+
+Set instance variables in Game to private and generate methods for subclasses.
