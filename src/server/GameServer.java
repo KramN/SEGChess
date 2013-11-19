@@ -12,6 +12,7 @@ public class GameServer extends AbstractServer {
 	List<Game> game;
 	
 	final public static int DEFAULT_PORT = 5555;
+	final public static String newline = System.getProperty("line.separator");
 	
 	public GameServer(int port){
 		super(port);
@@ -126,7 +127,7 @@ public class GameServer extends AbstractServer {
 	//restart
 	
 	private enum Command{
-		MOVE, NEWGAME
+		JOIN, MOVE, NEWGAME
 	}
 
 	/**
@@ -166,16 +167,13 @@ public class GameServer extends AbstractServer {
 		}
 		
 		switch (command) {
+		case JOIN:
+			
 		case MOVE:
 			//handleMove(command);
 			break;
 		case NEWGAME:
-			startNewGame(parameter);
-			try {
-				client.sendToClient("Game started successfully");
-			} catch (IOException e){
-				System.out.println("Could not send message to client: Game start.");
-			}
+			startNewGame(parameter, client);
 			break;
 			default:
 				//no default.
@@ -217,8 +215,31 @@ public class GameServer extends AbstractServer {
 		
 	}
 	
-	private void startNewGame(String name){
-		game.add(new ChessGame(name));
+	private void startNewGame(String name, ConnectionToClient client){
+		if (name.equals("")){
+			try{
+				client.sendToClient("Invalid game name");
+				return;
+			} catch (IOException e){
+				System.out.println("Unable to send game name error to client");
+			}
+		}
+		
+		//Currently only capable of handling chess games.
+		Game theGame = new ChessGame(name);
+		Player thePlayer = new Player();
+		game.add(theGame);
+		
+		client.setInfo("Game", theGame);
+		client.setInfo("Player", thePlayer);
+		
+		try {
+			client.sendToClient("Game started successfully." + newline + 
+					"Waiting for other player.");
+		} catch (IOException e){
+			System.out.println("Could not send message to client: Game start.");
+		}
+		
 	}
 
 }
