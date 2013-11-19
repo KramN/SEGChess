@@ -234,7 +234,7 @@ public class GameServer extends AbstractServer {
 		}
 		
 		Game theGame = game.get(index);
-		Player thePlayer = new Player();
+		Player thePlayer = new Player(theGame);
 		
 		
 		boolean added = theGame.addPlayer(thePlayer);
@@ -277,7 +277,7 @@ public class GameServer extends AbstractServer {
 		}
 		
 		Game theGame = new ChessGame(name);
-		Player thePlayer = new Player();
+		Player thePlayer = new Player(theGame);
 		
 		game.add(theGame);
 		theGame.addPlayer(thePlayer);
