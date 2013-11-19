@@ -74,7 +74,7 @@ public class ClientConsole implements GameIF {
 	}
 	
 	@Override
-	public void displayMessage(String message){
+	public void displayMessage(Object message){
 		System.out.println(message);
 	}
 

@@ -83,8 +83,7 @@ public class GameClient extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		// TODO Auto-generated method stub
-
+		clientUI.displayMessage(msg);
 	}
 
 }
