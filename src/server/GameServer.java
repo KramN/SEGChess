@@ -2,13 +2,21 @@ package server;
 
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import java.io.*;
+import java.util.*;
+import general.*;
+import chess.*;
 
 public class GameServer extends AbstractServer {
+	
+	List<Game> game;
 	
 	final public static int DEFAULT_PORT = 5555;
 	
 	public GameServer(int port){
 		super(port);
+		
+		game = new ArrayList<Game>();
 	}
 	
 	
@@ -79,11 +87,8 @@ public class GameServer extends AbstractServer {
 
 	  
 	  ///////////////// END HOOK METHODS ///////////////////////
-	  
-	  
-	  
-	  
-	  
+
+
 	  /**
 	   * Handles a command sent from one client to the server.
 	   * This method is called by a synchronized method so it is also
@@ -93,10 +98,89 @@ public class GameServer extends AbstractServer {
 	   * @param client the connection connected to the client that
 	   *  sent the message.
 	   */
-	@Override
-	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		System.out.println(client + " : " + msg);
+	  @Override
+	  protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
+		  System.out.println(client + " : " + msg);
+		  
+		  
+		  String message = "";
+		  try {
+			  message = (String)msg;
+		  } catch (ClassCastException e){
+			  System.out.println("Object of non-String type sent from " + client);
+		  }
+		  
+		  if (message.substring(0,1).equals("#")){
+			  handleCommandFromUser(message, client);
+		  }
 
+
+
+	  }
+	  
+	  
+	//////////////// NEEDED COMMANDS /////////
+	//move <xy> to <xy>
+	//startgame
+	//join game
+	//restart
+	
+	private enum Command{
+		MOVE, NEWGAME
+	}
+
+	/**
+	 * Method for handling all possible commands from the user
+	 * 
+	 * @param message The message from the UI.
+	 */
+	private void handleCommandFromUser(String message, ConnectionToClient client){
+		String argument;
+		String parameter = "";
+		Command command = null;
+		
+		//Checking to see if command from user has any arguments.
+		//Checks for a space to determine if an argument is present.
+		if (message.indexOf(' ') == -1){
+			argument = message.substring(1);
+		} else {
+			argument = message.substring(1, message.indexOf(' '));
+		}
+		
+		//Getting parameter if one exists.
+		if (message.indexOf(' ') != -1){
+			parameter = message.substring(message.indexOf(' ')+1);
+		}
+		
+		//Handling cases where user inputs invalid command.
+		try {
+			command = Command.valueOf(argument.toUpperCase());
+		} catch (IllegalArgumentException e){
+			try {
+				client.sendToClient("Bad Command. Try again.");
+			} catch (IOException e2){
+				System.out.println("Could not send message to client: Bad command.");
+			}
+			
+			//return; 
+		}
+		
+		switch (command) {
+		case MOVE:
+			//handleMove(command);
+			break;
+		case NEWGAME:
+			startNewGame(parameter);
+			try {
+				client.sendToClient("Game started successfully");
+			} catch (IOException e){
+				System.out.println("Could not send message to client: Game start.");
+			}
+			break;
+			default:
+				//no default.
+		}
+		
 	}
 	
 	public static void main(String[] args) 
@@ -123,5 +207,18 @@ public class GameServer extends AbstractServer {
 	      System.out.println("ERROR - Could not listen for clients!");
 	    }
 	  }
+	
+	
+
+	
+
+	
+	private void handleMove(){
+		
+	}
+	
+	private void startNewGame(String name){
+		game.add(new ChessGame(name));
+	}
 
 }
