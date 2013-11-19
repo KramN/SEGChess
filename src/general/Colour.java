@@ -16,9 +16,8 @@ public class Colour  {
 	private List<SpecificPiece> pieceList;
 	
 	// CONSTRUCTORS
-	public Colour(Player player, String colourName){
-		
-		this.player = player;
+	public Colour(String colourName){
+	
 		this.colourName = colourName;
 		pieceList = new ArrayList<SpecificPiece>();
 	}
@@ -27,6 +26,10 @@ public class Colour  {
 	// SETTERS
 	public void setPiece(SpecificPiece piece){
 		pieceList.add(piece);
+	}
+	
+	public void setPlayer(Player player){
+		this.player = player;
 	}
 	// INSTANCE METHODS
 

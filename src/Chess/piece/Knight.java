@@ -1,5 +1,7 @@
 package chess.piece;
 
+import java.util.List;
+
 import general.*;
 
 public class Knight extends PieceType {
@@ -8,11 +10,11 @@ public class Knight extends PieceType {
 		super(board);
 	}
 	
-	public void initialize(){
-		board.pieceInit(0, 1, this);
-		board.pieceInit(0, 6, this);
-		board.pieceInit(7, 1, this);
-		board.pieceInit(7, 6, this);
+	public void initialize(List<Colour> colourList){
+		board.pieceInit(0, 1, this, colourList.get(0));
+		board.pieceInit(0, 6, this, colourList.get(0));
+		board.pieceInit(7, 1, this, colourList.get(1));
+		board.pieceInit(7, 6, this, colourList.get(1));
 	}
 	
 	// INSTANCE METHODS

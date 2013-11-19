@@ -1,5 +1,7 @@
 package chess.piece;
 
+import java.util.List;
+
 import general.*;
 
 public class Rook extends PieceType { 
@@ -9,12 +11,12 @@ public class Rook extends PieceType {
 	}
 
 	// INSTANCE METHODS
-	public void initialize(){
+	public void initialize(List<Colour> colourList){
 		
-		board.pieceInit(0, 0, this);
-		board.pieceInit(0, 7, this);
-		board.pieceInit(7, 0, this);
-		board.pieceInit(7, 7, this);
+		board.pieceInit(0, 0, this, colourList.get(0));
+		board.pieceInit(0, 7, this, colourList.get(0));
+		board.pieceInit(7, 0, this, colourList.get(1));
+		board.pieceInit(7, 7, this, colourList.get(1));
 	}
 	
 	public String toString(){

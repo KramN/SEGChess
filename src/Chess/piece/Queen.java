@@ -1,5 +1,7 @@
 package chess.piece;
 
+import java.util.List;
+
 import general.*;
 
 public class Queen extends PieceType {
@@ -9,10 +11,10 @@ public class Queen extends PieceType {
 	}
 
 	// INSTANCE METHODS
-	public void initialize(){
+	public void initialize(List<Colour> colourList){
 		
-		board.pieceInit(0, 3, this);
-		board.pieceInit(7, 3, this);
+		board.pieceInit(0, 3, this, colourList.get(0));
+		board.pieceInit(7, 3, this, colourList.get(1));
 
 	}
 	
