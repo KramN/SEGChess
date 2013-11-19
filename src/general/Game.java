@@ -35,4 +35,9 @@ public abstract class Game {
 		return result;
 	}
 
+	public String getName(){
+		return name;
+	}
+	
+
 }
