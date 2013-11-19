@@ -9,11 +9,13 @@ public class SpecificPiece {
 	private Player player;
 	private Board board;
 	private PieceType pieceType;
+	private Colour colour;
 	
 	// CONSTRUCTORS
-	public SpecificPiece(Square square, PieceType pieceType){
+	public SpecificPiece(Square square, PieceType pieceType, Colour colour){
 		this.square = square;
 		this.pieceType = pieceType;
+		this.colour = colour;
 	}
 	
 	public String toString(){

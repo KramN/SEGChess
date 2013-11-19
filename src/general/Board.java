@@ -16,6 +16,7 @@ public class Board {
 	private Square[][] squares;
 	private List<SpecificPiece> specificPieces;
 	protected List<PieceType> pieceTypes;
+	
 		//do captured pieces remain in this list? **Yes**
 		//should the index of a given piece match the index of it's square's index in the square list? **No**
 	private Game game;
@@ -56,17 +57,17 @@ public class Board {
 	 * @param col
 	 * @param pieceType
 	 */
-	public void pieceInit(int row, int col, PieceType pieceType){
+	public void pieceInit(int row, int col, PieceType pieceType, Colour colour){
 		Square theSquare = getSquare(row, col);
-		SpecificPiece newPiece = new SpecificPiece(theSquare, pieceType);
+		SpecificPiece newPiece = new SpecificPiece(theSquare, pieceType, colour);
 
 		theSquare.setPiece(newPiece);
 		specificPieces.add(newPiece);
 	}
 	
-	public void init(){
+	public void init(List<Colour> colourList){
 		for (PieceType p : pieceTypes){
-			p.initialize();
+			p.initialize(colourList);
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package general;
 
+import java.util.List;
+
 public abstract class PieceType {
 
 	protected Board board;
@@ -8,6 +10,6 @@ public abstract class PieceType {
 		this.board = board;
 	}
 	
-	public abstract void initialize();
+	public abstract void initialize(List<Colour> colourList);
 
 }
