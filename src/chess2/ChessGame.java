@@ -1,4 +1,4 @@
-package chess;
+package chess2;
 
 
 import general.*;
