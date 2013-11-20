@@ -33,6 +33,7 @@ public class ChessGame extends Game {
 		}
 
 		players.add(aPlayer);
+		wasAdded = true;
 		
 		return wasAdded;
 	}
