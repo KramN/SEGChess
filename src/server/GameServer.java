@@ -2,8 +2,10 @@ package server;
 
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+
 import java.io.*;
 import java.util.*;
+
 import general.*;
 import chess.*;
 
@@ -222,7 +224,7 @@ public class GameServer extends AbstractServer {
 	 * List of all possible commands from user.
 	 */
 	private enum Command{
-		QUIT, STOP, CLOSE, SETPORT, START, GETPORT
+		QUIT, STOP, CLOSE, SETPORT, START, GETPORT, HELP
 	}
 
 	/**
@@ -294,6 +296,22 @@ public class GameServer extends AbstractServer {
 			}
 			break;
 		case GETPORT: console.display("Port: " + getPort()); break;
+		case HELP:
+			String line;
+			try{
+				BufferedReader in = new BufferedReader(new FileReader("docs/shelp.txt"));
+				try{
+					while ((line = in.readLine()) != null){
+						console.display(line);
+					}
+				} catch (IOException e){
+					console.display("Error reading help file");
+				}
+				try {in.close();} catch(IOException e){};
+			} catch (FileNotFoundException e){
+				console.display("Help file not found");
+			}
+			break;
 		}
 	}
 
@@ -336,12 +354,10 @@ public class GameServer extends AbstractServer {
 	
 	//////////////// NEEDED COMMANDS /////////
 	//TODO move <xy> to <xy>
-	//startgame
-	//join game
 	//restart
 
 	private enum ClientCommand{
-		JOIN, MOVE, NEWCHESS
+		JOIN, MOVE, NEWCHESS, DISPLAYBOARD
 	}
 
 	/**
@@ -389,12 +405,20 @@ public class GameServer extends AbstractServer {
 		case NEWCHESS:
 			newChessGame(parameter, client);
 			break;
-		default:
-			//no default.
+		case DISPLAYBOARD:
+			displayBoard(client);
 		}
 
 	}
 
+	private void displayBoard(ConnectionToClient client){
+		Game theGame = (Game) client.getInfo("Game");
+		try{
+			client.sendToClient(theGame);
+		} catch (IOException e){
+			console.display("Unable to send game state to " + client);
+		}
+	}
 
 	private void joinGame(String name, ConnectionToClient client){
 
@@ -428,7 +452,7 @@ public class GameServer extends AbstractServer {
 
 	}
 
-	private void handleMove(){
+	private void handleMove(String move, ConnectionToClient client){
 
 	}
 

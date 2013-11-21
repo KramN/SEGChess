@@ -1,5 +1,3 @@
-// **** Changed for E50 - MK, PS (Created for)
-
 package server;
 
 /**

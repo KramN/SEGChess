@@ -1,7 +1,0 @@
-#quit : shutdown client.
-#logoff : disconnects from current server.
-#sethost <host> : change the current host.
-#setport <port> : change the current port for server.
-#login  <ID> : logs in to the set server with optional new id.
-#gethost : displays the current host name.
-#getport : displays the current port number.
