@@ -12,9 +12,9 @@ public abstract class Game {
 	private String name;
 
 	//Game Associations
-	protected Board board;
-	protected List<Player> players;
-	protected List<Colour> colourList;
+	private Board board;
+	private List<Player> players;
+	private List<Colour> colourList;
 	
 	public Game(String aName)
 	{
@@ -26,6 +26,7 @@ public abstract class Game {
 	// ABSTRACT METHODS
 	public abstract void setupBoard();
 	public abstract boolean addPlayer(Player aPlayer);
+	public abstract int maximumNumberOfPlayers();
 	
 	
 	//CLASS METHODS
@@ -50,6 +51,48 @@ public abstract class Game {
 	public String getName(){
 		return name;
 	}
+	
+	public Board getBoard(){
+		return board;
+	}
+	
+	public List<Player> getPlayers(){
+		return players;
+	}
+	
+	public List<Colour> getColourList(){
+		return colourList;
+	}
+	
+	
+	public void setBoard(Board board){
+		this.board = board;
+	}
+	
+	public boolean addToColourList(Colour c){
+		
+		boolean wasAdded = false;
+		if (colourListContains(c)) { return false; }
+		if (numberOfPlayers() >= maximumNumberOfPlayers())
+		{
+			return wasAdded;
+		}
+
+		colourList.add(c);
+		wasAdded = true;
+		
+		return wasAdded;
+	}
+	
+	
+	public boolean playersContains(Player player){
+		return players.contains(player);
+	}
+	
+	public boolean colourListContains(Colour colour){
+		return colourList.contains(colour);
+	}
+	
 	
 
 }
