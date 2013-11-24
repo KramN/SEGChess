@@ -9,14 +9,14 @@ public class ChessGame extends Game {
 	
 	public ChessGame(String name){
 		super(name);
-		colourList.add(new Colour("White"));
-		colourList.add(new Colour("Black"));
+		addToColourList(new Colour("White"));
+		addToColourList(new Colour("Black"));
 	}
 	
 	public void setupBoard(){
 		
 		//Set up blank chess board
-		board = new Board(this, 8, 8);
+		setBoard(new Board(this, 8, 8));
 		
 		//populate board with chess pieces
 		//will need to have set the players (white and black) at this point to properly construct piece objects
@@ -26,24 +26,26 @@ public class ChessGame extends Game {
 	public boolean addPlayer(Player aPlayer)
 	{
 		boolean wasAdded = false;
-		if (players.contains(aPlayer)) { return false; }
+		if (playersContains(aPlayer)) { return false; }
 		if (numberOfPlayers() >= maximumNumberOfPlayers())
 		{
 			return wasAdded;
 		}
 
-		players.add(aPlayer);
+		addPlayer(aPlayer);
 		wasAdded = true;
 		
 		return wasAdded;
 	}
 	
-	  public static int maximumNumberOfPlayers()
+	  public int maximumNumberOfPlayers()
 	  {
 	    return 2;
 	  }
 	
 	private void initializeChessBoard(){
+		Board board = getBoard();
+		
 		board.addPieceType(new Pawn(board));
 		board.addPieceType(new Rook(board));
 		board.addPieceType(new Knight(board));
@@ -51,7 +53,7 @@ public class ChessGame extends Game {
 		board.addPieceType(new Queen(board));
 		board.addPieceType(new King(board));
 		
-		board.init(colourList);
+		board.init(getColourList());
 		
 
 	}
