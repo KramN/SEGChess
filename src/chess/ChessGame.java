@@ -23,21 +23,6 @@ public class ChessGame extends Game {
 		initializeChessBoard();
 	}
 	
-	public boolean addPlayer(Player aPlayer)
-	{
-		boolean wasAdded = false;
-		if (playersContains(aPlayer)) { return false; }
-		if (numberOfPlayers() >= maximumNumberOfPlayers())
-		{
-			return wasAdded;
-		}
-
-		addPlayer(aPlayer);
-		wasAdded = true;
-		
-		return wasAdded;
-	}
-	
 	  public int maximumNumberOfPlayers()
 	  {
 	    return 2;

@@ -84,8 +84,7 @@ public class GameClient extends AbstractClient {
 	 * Enum constants for commands from the user.
 	 */
 	private enum Command{
-		QUIT, LOGOFF, SETHOST, SETPORT, LOGIN, GETHOST, GETPORT, HELP,
-		DISPLAYBOARD
+		QUIT, LOGOFF, SETHOST, SETPORT, LOGIN, GETHOST, GETPORT, HELP
 	}
 
 	/**
@@ -189,13 +188,6 @@ public class GameClient extends AbstractClient {
 			}
 			break;
 		///////////// CHESS COMMANDS /////////////////////
-		case DISPLAYBOARD:
-			try {
-				sendToServer("#displayboard");
-			} catch (IOException e){
-				clientUI.displayMessage("Could not send command to server.");
-			}
-			clientUI.
 		}
 	}
 

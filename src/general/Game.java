@@ -25,7 +25,6 @@ public abstract class Game {
 	
 	// ABSTRACT METHODS
 	public abstract void setupBoard();
-	public abstract boolean addPlayer(Player aPlayer);
 	public abstract int maximumNumberOfPlayers();
 	
 	
@@ -79,6 +78,21 @@ public abstract class Game {
 		}
 
 		colourList.add(c);
+		wasAdded = true;
+		
+		return wasAdded;
+	}
+	
+	public boolean addPlayer(Player aPlayer)
+	{
+		boolean wasAdded = false;
+		if (playersContains(aPlayer)) { return false; }
+		if (numberOfPlayers() >= maximumNumberOfPlayers())
+		{
+			return wasAdded;
+		}
+
+		addPlayer(aPlayer);
 		wasAdded = true;
 		
 		return wasAdded;
