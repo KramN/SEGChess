@@ -1,0 +1,6 @@
+#quit : shutdown the server.
+#stop : stop listening for new connections.
+#close : close all connections and stop listening for new ones.
+#setport <port> :  changes the port.
+#start : starts listening for new connections.
+#getport : displays the current port number.

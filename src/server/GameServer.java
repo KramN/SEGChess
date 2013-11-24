@@ -412,7 +412,7 @@ public class GameServer extends AbstractServer {
 	}
 
 	private void displayBoard(ConnectionToClient client){
-		Game theGame = (Game) client.getInfo("Game");
+		Board theGame = (Board) client.getInfo("Game").getBoard();
 		try{
 			client.sendToClient(theGame);
 		} catch (IOException e){

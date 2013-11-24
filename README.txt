@@ -16,6 +16,8 @@ Set instance variables in Game to private and generate methods for subclasses.
 
 We may want to have an assocation from Game to PieceType to store all the PieceTypes somewhere..
 
+Split Client commands into separate methods.
+
 
 Low Priority:
 Test the "return" line in the beginning of handleCommandFromUser.

@@ -2,6 +2,7 @@ package client;
 
 import ocsf.client.AbstractClient;
 import java.io.*;
+import general.*;
 
 public class GameClient extends AbstractClient {
 
@@ -62,7 +63,6 @@ public class GameClient extends AbstractClient {
 	 */
 	public void handleMessageFromClientUI(String message)
 	{
-		// **** Changed for E50 - MK, PS
 		//Checking for user command and handling appropriately.
 		if (message.length() != 0 && message.substring(0,1).equals("#")){
 			handleCommand(message);
@@ -84,7 +84,8 @@ public class GameClient extends AbstractClient {
 	 * Enum constants for commands from the user.
 	 */
 	private enum Command{
-		QUIT, LOGOFF, SETHOST, SETPORT, LOGIN, GETHOST, GETPORT, HELP
+		QUIT, LOGOFF, SETHOST, SETPORT, LOGIN, GETHOST, GETPORT, HELP,
+		DISPLAYBOARD
 	}
 
 	/**
@@ -187,6 +188,14 @@ public class GameClient extends AbstractClient {
 				clientUI.displayMessage("Help file not found");
 			}
 			break;
+		///////////// CHESS COMMANDS /////////////////////
+		case DISPLAYBOARD:
+			try {
+				sendToServer("#displayboard");
+			} catch (IOException e){
+				clientUI.displayMessage("Could not send command to server.");
+			}
+			clientUI.
 		}
 	}
 
@@ -208,6 +217,9 @@ public class GameClient extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
+		if (msg instanceof Board){
+			clientUI.displayBoard((Board)msg);
+		}
 		clientUI.displayMessage(msg);
 	}
 
