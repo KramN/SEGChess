@@ -356,7 +356,7 @@ public class GameServer extends AbstractServer {
 	//restart
 
 	private enum ClientCommand{
-		JOIN, MOVE, NEWCHESS, DISPLAYBOARD, TEST
+		JOIN, MOVE, NEWCHESS, DISPLAYBOARD, RESET, TEST
 	}
 
 	/**
@@ -398,14 +398,22 @@ public class GameServer extends AbstractServer {
 		switch (command) {
 		case JOIN:
 			joinGame(parameter, client);
+			break;
 		case MOVE:
-			move(parameter, client);
+			try {
+				move(parameter, client);
+			} catch (IOException e){
+				console.display("Unable to send " + client + " invalid move message");
+			}
 			break;
 		case NEWCHESS:
 			newChessGame(parameter, client);
 			break;
 		case DISPLAYBOARD:
 			displayBoard(client);
+			break;
+		case RESET:
+			reset(client);
 			break;
 		case TEST:
 			//TODO Create object output stream and update all passing of game string stuff.
@@ -414,16 +422,16 @@ public class GameServer extends AbstractServer {
 			} catch (IOException e){
 				System.out.println("TESTING FAILED");
 			}
+			break;
 		}
 	}
 	
-	private void messageGame(Game game, Object msg){
-		List<Player> players = game.getPlayers();
-		for (Player p : players){
-			p.sendToPlayer(msg);
-		}
+	private void reset(ConnectionToClient client){
+		Game theGame = (Game) client.getInfo("Game");
+		theGame.start();
+		displayAllBoard(theGame);
 	}
-
+	
 	private void displayBoard(ConnectionToClient client){
 		Game theGame = (Game) client.getInfo("Game");
 		//Board theBoard = theGame.getBoard();
@@ -458,7 +466,7 @@ public class GameServer extends AbstractServer {
 			messageGame(theGame, client.getInfo("loginID") + " has joined " + theGame.getName() + ".");
 			if (theGame.isReadyToStart()){
 				theGame.start();
-				messageGame(theGame, theGame.toString());
+				displayAllBoard(theGame);
 			}
 		} else {
 			try {
@@ -470,14 +478,20 @@ public class GameServer extends AbstractServer {
 
 	}
 
-	private void move(String move, ConnectionToClient client){
+	private void move(String move, ConnectionToClient client) throws IOException{
 		Player player = (Player)client.getInfo("Player");
 		Game game = player.getGame();
-		//boolean wasMoved = game.move(move, player);
-		if (wasMoved){
-			messageGame(game, game.toString()); 
-		} else {
-			client.sendToClient("Invalid Move");
+		boolean wasMoved = false;
+		
+		try {
+			wasMoved = game.move(move, player);
+			if (wasMoved){
+				displayAllBoard(game); 
+			} else {
+				client.sendToClient("Invalid Move.");
+			}
+		} catch (OutsideBoardException e){
+			client.sendToClient("Move was outside board. Try again.");
 		}
 	}
 
@@ -519,6 +533,17 @@ public class GameServer extends AbstractServer {
 			System.out.println("Could not send message to client: Game start.");
 		}
 
+	}
+	
+	private void displayAllBoard(Game game){
+		messageGame(game, game.toString());
+	}
+	
+	private void messageGame(Game game, Object msg){
+		List<Player> players = game.getPlayers();
+		for (Player p : players){
+			p.sendToPlayer(msg);
+		}
 	}
 
 }

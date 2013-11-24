@@ -29,7 +29,7 @@ public abstract class Game {
 	public abstract int minimumNumberOfPlayers();
 	public abstract boolean start();
 	public abstract boolean isReadyToStart();
-	public abstract boolean move(String move);
+	public abstract boolean move(String move, Player player);
 	
 	
 	//CLASS METHODS

@@ -20,7 +20,11 @@ public class Testing {
 		System.out.println(theGame);
 		
 		// Test moving pieces outside board
-		theGame.movePiece(1, 1, 9, 9);
+		try{
+			theGame.movePiece(1, 1, 9, 9);
+		} catch (OutsideBoardException e){
+			System.out.println("Outside board success");
+		}
 		System.out.println(theGame);
 		
 		String testMove = "01 76";

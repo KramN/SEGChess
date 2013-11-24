@@ -16,9 +16,9 @@ public class Board {
 	private Square[][] squares;
 	private List<SpecificPiece> specificPieces;
 	protected List<PieceType> pieceTypes;
-	
-		//do captured pieces remain in this list? **Yes**
-		//should the index of a given piece match the index of it's square's index in the square list? **No**
+
+	//do captured pieces remain in this list? **Yes**
+	//should the index of a given piece match the index of it's square's index in the square list? **No**
 	private Game game;
 	
 	//------------------------
@@ -78,19 +78,23 @@ public class Board {
 	
 	//INSTANCE METHODS
 	
-	public void movePiece(int startX, int startY, int endX, int endY){
+	public boolean movePiece(int startX, int startY, int endX, int endY){
 		// TODO This method will need a lot of checks.
 		// TODO Will need to call either the game and/or the piecetype to see if valid move
 		// TODO Must handle check/error for if no piece exists
-		
-		Square startSquare = getSquare(startX, startY);
-		Square endSquare = getSquare(endX, endY);
+		boolean wasMoved = false;
 		
 		if (isOutsideBoard(startX, startY, endX, endY)){
 			throw new OutsideBoardException();
 		}
+
+		Square startSquare = getSquare(startX, startY);
+		Square endSquare = getSquare(endX, endY);
+			
+		endSquare.setPiece(startSquare.removePiece());
+		wasMoved = true;
 		
-		endSquare.setPiece(startSquare.removePiece());		
+		return wasMoved;
 	}
 	
 	private boolean isOutsideBoard(int startX, int startY, int endX, int endY){
@@ -113,11 +117,18 @@ public class Board {
 		String result = "";
 		
 		for (int i = rows - 1; i >= 0; i--){
-			result += System.getProperty("line.separator");
+			result += System.getProperty("line.separator") + i;
 			for (int j = 0; j < cols; j++){
 				result += " " + getSquare(i, j); //Calls the Square at position (i, j)'s toString()
 			}
 		}
+		
+		result += System.getProperty("line.separator") + " ";
+		
+		for (int i = 0; i < cols; i++){
+			result += " " + i;
+		}
+		
 		return result;
 	}
 	

@@ -69,7 +69,7 @@ public class ChessGame extends Game {
 	}
 	
 	//TODO This method needs major overhaul
-	public boolean move(String move){
+	public boolean move(String move, Player player) throws OutsideBoardException {
 		boolean wasMoved = false;
 		int startX, startY, endX, endY;
 		Board board = getBoard();
@@ -79,9 +79,7 @@ public class ChessGame extends Game {
 		endX = Integer.parseInt(move.substring(3,4));
 		endY = Integer.parseInt(move.substring(4,5));
 		
-		
-		board.movePiece(startX, startY, endX, endY);
-		
+		wasMoved = board.movePiece(startX, startY, endX, endY);
 		
 		return wasMoved;
 	}
