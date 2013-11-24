@@ -187,7 +187,6 @@ public class GameClient extends AbstractClient {
 				clientUI.displayMessage("Help file not found");
 			}
 			break;
-		///////////// CHESS COMMANDS /////////////////////
 		}
 	}
 

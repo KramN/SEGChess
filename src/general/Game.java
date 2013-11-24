@@ -14,27 +14,24 @@ public abstract class Game {
 	//Game Associations
 	private Board board;
 	private List<Player> players;
-	private List<Colour> colourList;
+	private List<Colour> colours;
 	
 	public Game(String aName)
 	{
 		name = aName;
 		players = new ArrayList<Player>();
-		colourList = new ArrayList<Colour>();
+		colours = new ArrayList<Colour>();
 	}
 	
 	// ABSTRACT METHODS
 	public abstract void setupBoard();
 	public abstract int maximumNumberOfPlayers();
+	public abstract int minimumNumberOfPlayers();
+	public abstract boolean start();
+	public abstract boolean isReadyToStart();
 	
 	
 	//CLASS METHODS
-	public int numberOfPlayers()
-	  {
-	    int number = players.size();
-	    return number;
-	  }
-	
 	public void movePiece(int startX, int startY, int endX, int endY){
 		board.movePiece(startX, startY, endX, endY);
 	}
@@ -55,32 +52,26 @@ public abstract class Game {
 		return board;
 	}
 	
+	//PLAYER LIST METHODS
+	
 	public List<Player> getPlayers(){
 		return players;
 	}
 	
-	public List<Colour> getColourList(){
-		return colourList;
+	public Player getPlayer(int index)
+	{
+		Player aPlayer = players.get(index);
+		return aPlayer;
 	}
 	
+	public int numberOfPlayers()
+	  {
+	    int number = players.size();
+	    return number;
+	  }
 	
-	public void setBoard(Board board){
-		this.board = board;
-	}
-	
-	public boolean addToColourList(Colour c){
-		
-		boolean wasAdded = false;
-		if (colourListContains(c)) { return false; }
-		if (numberOfPlayers() >= maximumNumberOfPlayers())
-		{
-			return wasAdded;
-		}
-
-		colourList.add(c);
-		wasAdded = true;
-		
-		return wasAdded;
+	public boolean playersContains(Player player){
+		return players.contains(player);
 	}
 	
 	public boolean addPlayer(Player aPlayer)
@@ -92,20 +83,55 @@ public abstract class Game {
 			return wasAdded;
 		}
 
-		addPlayer(aPlayer);
+		players.add(aPlayer);
 		wasAdded = true;
 		
 		return wasAdded;
 	}
 	
+	// COLOUR LIST METHODS
 	
-	public boolean playersContains(Player player){
-		return players.contains(player);
+	public boolean coloursContains(Colour colour){
+		return colours.contains(colour);
 	}
 	
-	public boolean colourListContains(Colour colour){
-		return colourList.contains(colour);
+	public List<Colour> getColourList(){
+		return colours;
 	}
+	
+	public Colour getColour(int index)
+	{
+		Colour aColour = colours.get(index);
+		return aColour;
+	}
+	
+	public int numberOfColours()
+	  {
+	    int number = colours.size();
+	    return number;
+	  }
+	
+	public boolean addToColours(Colour c){
+		
+		boolean wasAdded = false;
+		if (coloursContains(c)) { return false; }
+		if (numberOfPlayers() >= maximumNumberOfPlayers())
+		{
+			return wasAdded;
+		}
+
+		colours.add(c);
+		wasAdded = true;
+		
+		return wasAdded;
+	}
+	
+	public void setBoard(Board board){
+		this.board = board;
+	}
+	
+	
+
 	
 	
 

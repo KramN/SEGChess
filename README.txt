@@ -1,8 +1,10 @@
 NOTES:
 
-Must handle displayBoard() method in ServerConsole.
+URGENT: Display board method currents sends string representation of board.
 
 Method for sending messages to clients in a game not ideal.
+
+Error check: displayboard before game has started.
 
 Colour Class? Probably.
 

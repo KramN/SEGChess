@@ -9,8 +9,8 @@ public class ChessGame extends Game {
 	
 	public ChessGame(String name){
 		super(name);
-		addToColourList(new Colour("White"));
-		addToColourList(new Colour("Black"));
+		addToColours(new Colour("White"));
+		addToColours(new Colour("Black"));
 	}
 	
 	public void setupBoard(){
@@ -27,6 +27,12 @@ public class ChessGame extends Game {
 	  {
 	    return 2;
 	  }
+	  
+	  //This is the minimum number of players to start a game.
+	  //This is not the minimum number of associations.
+	  public int minimumNumberOfPlayers(){
+		  return 2; 
+	  }
 	
 	private void initializeChessBoard(){
 		Board board = getBoard();
@@ -41,6 +47,25 @@ public class ChessGame extends Game {
 		board.init(getColourList());
 		
 
+	}
+	
+	public boolean isReadyToStart(){
+		if (numberOfPlayers() < minimumNumberOfPlayers()){
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean start(){
+		if (numberOfPlayers() < minimumNumberOfPlayers()){
+			return false;
+		}
+		setupBoard();
+		getPlayer(0).setColour(getColour(0));
+		getPlayer(1).setColour(getColour(1));
+
+		return true;
 	}
 		
 }

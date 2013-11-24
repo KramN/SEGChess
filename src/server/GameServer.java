@@ -187,7 +187,6 @@ public class GameServer extends AbstractServer {
 	 * @param message First message passed to server from client
 	 * @param client The connection from which the message originated.
 	 */
-	//**** Changed for E51 - MK, PS
 	private void handleLogin(String message, ConnectionToClient client){
 		//Handles the case where the user's first message was not a #login command.
 		if(!(message.substring(0,6).equals("#login"))){
@@ -357,7 +356,7 @@ public class GameServer extends AbstractServer {
 	//restart
 
 	private enum ClientCommand{
-		JOIN, MOVE, NEWCHESS, DISPLAYBOARD
+		JOIN, MOVE, NEWCHESS, DISPLAYBOARD, TEST
 	}
 
 	/**
@@ -410,12 +409,19 @@ public class GameServer extends AbstractServer {
 		}
 
 	}
+	
+	private void messageGame(Game game, Object msg){
+		List<Player> players = game.getPlayers();
+		for (Player p : players){
+			p.sendToPlayer(msg);
+		}
+	}
 
 	private void displayBoard(ConnectionToClient client){
 		Game theGame = (Game) client.getInfo("Game");
-		Board theBoard = theGame.getBoard();
+		//Board theBoard = theGame.getBoard();
 		try{
-			client.sendToClient(theGame);
+			client.sendToClient(theGame.toString());
 		} catch (IOException e){
 			console.display("Unable to send game state to " + client);
 		}
@@ -435,14 +441,18 @@ public class GameServer extends AbstractServer {
 		}
 
 		Game theGame = game.get(index);
-		Player thePlayer = new Player(theGame);
+		Player thePlayer = new Player(theGame, client);
 
 
 		boolean added = theGame.addPlayer(thePlayer);
 		if (added){
 			client.setInfo("Game", theGame);
 			client.setInfo("Player", thePlayer);
-			sendToAllClients(client.getInfo("loginID") + " has joined the game."); //Not good if multiple games are going. Need to fix. 
+			messageGame(theGame, client.getInfo("loginID") + " has joined " + theGame.getName() + ".");
+			if (theGame.isReadyToStart()){
+				theGame.start();
+				messageGame(theGame, theGame.toString());
+			}
 		} else {
 			try {
 				client.sendToClient("Unable to join game. Likely full.");
@@ -459,6 +469,7 @@ public class GameServer extends AbstractServer {
 
 
 	private void newChessGame(String name, ConnectionToClient client){
+		console.display("New game requested by " + client);
 		if (name.equals("")){
 			try{
 				client.sendToClient("Invalid game name");
@@ -479,7 +490,7 @@ public class GameServer extends AbstractServer {
 		}
 
 		Game theGame = new ChessGame(name);
-		Player thePlayer = new Player(theGame);
+		Player thePlayer = new Player(theGame, client);
 
 		game.add(theGame);
 		theGame.addPlayer(thePlayer);
