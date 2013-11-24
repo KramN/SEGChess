@@ -79,15 +79,33 @@ public class Board {
 	//INSTANCE METHODS
 	
 	public void movePiece(int startX, int startY, int endX, int endY){
-		// This method will need a lot of checks.
-		// Will need to call either the game and/or the piecetype to see if valid move
-		// Must handle check/error for if no piece exists
-		// Check that positions are within board range
+		// TODO This method will need a lot of checks.
+		// TODO Will need to call either the game and/or the piecetype to see if valid move
+		// TODO Must handle check/error for if no piece exists
 		
 		Square startSquare = getSquare(startX, startY);
 		Square endSquare = getSquare(endX, endY);
 		
+		if (isOutsideBoard(startX, startY, endX, endY)){
+			throw new OutsideBoardException();
+		}
+		
 		endSquare.setPiece(startSquare.removePiece());		
+	}
+	
+	private boolean isOutsideBoard(int startX, int startY, int endX, int endY){
+		if (startX < 0 ||
+				startX < 0 ||
+				startY < 0 ||
+				endX < 0 ||
+				endY <0 ||
+				startX >= rows ||
+				startY >= cols ||
+				endX >= rows ||
+				endY >= cols){
+			return true;
+		}
+		return false;
 	}
 	
 	

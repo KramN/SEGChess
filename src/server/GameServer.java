@@ -399,15 +399,22 @@ public class GameServer extends AbstractServer {
 		case JOIN:
 			joinGame(parameter, client);
 		case MOVE:
-			//handleMove(parameter, client);
+			move(parameter, client);
 			break;
 		case NEWCHESS:
 			newChessGame(parameter, client);
 			break;
 		case DISPLAYBOARD:
 			displayBoard(client);
+			break;
+		case TEST:
+			//TODO Create object output stream and update all passing of game string stuff.
+			try{
+				client.sendToClient(new ChessGame("Debug"));
+			} catch (IOException e){
+				System.out.println("TESTING FAILED");
+			}
 		}
-
 	}
 	
 	private void messageGame(Game game, Object msg){
@@ -463,8 +470,15 @@ public class GameServer extends AbstractServer {
 
 	}
 
-	private void handleMove(String move, ConnectionToClient client){
-
+	private void move(String move, ConnectionToClient client){
+		Player player = (Player)client.getInfo("Player");
+		Game game = player.getGame();
+		//boolean wasMoved = game.move(move, player);
+		if (wasMoved){
+			messageGame(game, game.toString()); 
+		} else {
+			client.sendToClient("Invalid Move");
+		}
 	}
 
 

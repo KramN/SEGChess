@@ -19,5 +19,16 @@ public class Testing {
 		theGame.movePiece(3, 4, 7, 4);
 		System.out.println(theGame);
 		
+		// Test moving pieces outside board
+		theGame.movePiece(1, 1, 9, 9);
+		System.out.println(theGame);
+		
+		String testMove = "01 76";
+		int startX = Integer.parseInt(testMove.substring(0,1));
+		int startY = Integer.parseInt(testMove.substring(1,2));
+		int endX = Integer.parseInt(testMove.substring(3,4));
+		int endY = Integer.parseInt(testMove.substring(4,5));
+		System.out.println(startX + " " + startY + " " + endX + " " + endY);
+		
 	}
 }

@@ -18,6 +18,9 @@ public class Player {
 		this.client = client;
 	}
 	// GETTERS
+	public Game getGame(){
+		return game;
+	}
 	// SETTERS
 	public void setColour(Colour colour){
 		this.colour = colour;
@@ -30,5 +33,9 @@ public class Player {
 		} catch (IOException e){
 			System.out.println("Unable to send message to player.");
 		}
+	}
+	
+	public void move(String move){
+		
 	}
 }

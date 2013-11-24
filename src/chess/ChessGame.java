@@ -67,6 +67,26 @@ public class ChessGame extends Game {
 
 		return true;
 	}
+	
+	//TODO This method needs major overhaul
+	public boolean move(String move){
+		boolean wasMoved = false;
+		int startX, startY, endX, endY;
+		Board board = getBoard();
+		
+		startX = Integer.parseInt(move.substring(0,1));
+		startY = Integer.parseInt(move.substring(1,2));
+		endX = Integer.parseInt(move.substring(3,4));
+		endY = Integer.parseInt(move.substring(4,5));
+		
+		
+		board.movePiece(startX, startY, endX, endY);
+		
+		
+		return wasMoved;
+	}
+	
+	
 		
 }
 

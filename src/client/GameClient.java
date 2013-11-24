@@ -208,8 +208,8 @@ public class GameClient extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		if (msg instanceof Board){
-			clientUI.displayBoard((Board)msg);
+		if (!(msg instanceof String)){ //TODO Change this to displaying Boards once objects figured out.
+			clientUI.displayMessage(msg.toString());
 		}
 		clientUI.displayMessage(msg);
 	}
