@@ -343,6 +343,7 @@ public class GameServer extends AbstractServer {
 		int index = -1;
 
 		for (int i = 0; i < game.size(); i++){
+			//TODO Fix law of demeter thing below.
 			if (game.get(i).getName().equals(name)){
 				index = i;
 			}
@@ -391,8 +392,6 @@ public class GameServer extends AbstractServer {
 			} catch (IOException e2){
 				System.out.println("Could not send message to client: Bad command.");
 			}
-
-			//return; 
 		}
 
 		switch (command) {
@@ -426,20 +425,37 @@ public class GameServer extends AbstractServer {
 		}
 	}
 	
+	private boolean hasGame(Game game, ConnectionToClient client){
+		if (game == null){
+			try{
+				client.sendToClient("No current game.");
+			} catch (IOException e){
+				console.display("Unable to send null game error to " + client);
+			}
+			return false;
+		} else {
+			return true;
+		}
+			
+	}
+	
 	private void reset(ConnectionToClient client){
 		//TODO Catch issues where there is no game started.
 		Game theGame = (Game) client.getInfo("Game");
-		theGame.start();
-		displayAllBoard(theGame);
+		if (hasGame(theGame, client)){
+			theGame.start();
+			displayAllBoard(theGame);
+		}
 	}
 	
 	private void displayBoard(ConnectionToClient client){
 		Game theGame = (Game) client.getInfo("Game");
-		//Board theBoard = theGame.getBoard();
-		try{
-			client.sendToClient(theGame.toString());
-		} catch (IOException e){
-			console.display("Unable to send game state to " + client);
+		if (hasGame(theGame, client)){
+			try{
+				client.sendToClient(theGame.toString());
+			} catch (IOException e){
+				console.display("Unable to send game state to " + client);
+			}
 		}
 	}
 
@@ -482,17 +498,21 @@ public class GameServer extends AbstractServer {
 	private void move(String move, ConnectionToClient client) throws IOException{
 		Player player = (Player)client.getInfo("Player");
 		Game game = player.getGame();
-		boolean wasMoved = false;
-		
-		try {
-			wasMoved = game.move(move, player);
-			if (wasMoved){
-				displayAllBoard(game); 
-			} else {
-				client.sendToClient("Invalid Move.");
+		if (hasGame(game, client)){
+			boolean wasMoved = false;
+
+			try {
+				wasMoved = game.move(move, player);
+				if (wasMoved){
+					displayAllBoard(game); 
+				} else {
+					client.sendToClient("Invalid Move.");
+				}
+			} catch (OutsideBoardException e){
+				client.sendToClient("Move was outside board. Try again.");
+			} catch (NoPieceException e){
+				client.sendToClient("No piece to move.");
 			}
-		} catch (OutsideBoardException e){
-			client.sendToClient("Move was outside board. Try again.");
 		}
 	}
 
