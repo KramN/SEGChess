@@ -6,7 +6,7 @@ public class Square {
 	//------------------------
 	// MEMBER VARIABLES
 	//------------------------
-	boolean hasPiece;
+	private boolean hasPiece;
 	
 	//Square Associations
 	SpecificPiece thePiece;
@@ -27,6 +27,10 @@ public class Square {
 		thePiece = null;
 		hasPiece = false;
 		return temp;
+	}
+	
+	public boolean hasPiece(){
+		return hasPiece;
 	}
 	
 	public String toString(){
