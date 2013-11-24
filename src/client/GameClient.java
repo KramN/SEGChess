@@ -118,8 +118,7 @@ public class GameClient extends AbstractClient {
 			catch(IOException e2)
 			{
 				clientUI.displayMessage
-				("Could not send message to server.  Terminating client.");
-				quit();
+				("Could not send message to server.");
 			}
 			return;
 		}

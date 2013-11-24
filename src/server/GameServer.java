@@ -392,6 +392,7 @@ public class GameServer extends AbstractServer {
 			} catch (IOException e2){
 				System.out.println("Could not send message to client: Bad command.");
 			}
+			return;
 		}
 
 		switch (command) {
@@ -496,9 +497,9 @@ public class GameServer extends AbstractServer {
 	}
 
 	private void move(String move, ConnectionToClient client) throws IOException{
-		Player player = (Player)client.getInfo("Player");
-		Game game = player.getGame();
+		Game game = (Game) client.getInfo("Game");
 		if (hasGame(game, client)){
+			Player player = (Player)client.getInfo("Player");
 			boolean wasMoved = false;
 
 			try {
