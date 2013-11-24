@@ -89,6 +89,11 @@ public class Board {
 		}
 
 		Square startSquare = getSquare(startX, startY);
+		
+		if(!startSquare.hasPiece()){
+			throw new NoPieceException();
+		}
+		
 		Square endSquare = getSquare(endX, endY);
 			
 		endSquare.setPiece(startSquare.removePiece());

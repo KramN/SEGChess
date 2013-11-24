@@ -69,7 +69,8 @@ public class ChessGame extends Game {
 	}
 	
 	//TODO This method needs major overhaul
-	public boolean move(String move, Player player) throws OutsideBoardException {
+	public boolean move(String move, Player player) 
+		throws OutsideBoardException, NoPieceException{
 		boolean wasMoved = false;
 		int startX, startY, endX, endY;
 		Board board = getBoard();

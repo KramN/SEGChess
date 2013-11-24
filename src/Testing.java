@@ -19,6 +19,7 @@ public class Testing {
 		theGame.movePiece(3, 4, 7, 4);
 		System.out.println(theGame);
 		
+		theGame.movePiece(2, 4, 1, 0);
 		// Test moving pieces outside board
 		try{
 			theGame.movePiece(1, 1, 9, 9);
