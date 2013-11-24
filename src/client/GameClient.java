@@ -172,21 +172,30 @@ public class GameClient extends AbstractClient {
 		case GETHOST: clientUI.displayMessage("Host: " + getHost()); break;
 		case GETPORT: clientUI.displayMessage("Port: " + getPort()); break;
 		case HELP:
-			String line;
+			help(argument); break;
+		}
+	}
+	
+	public void help(String argument){
+		String line;
+		String doc;
+		if (argument.equals("chess")){
+			doc = "chess";
+		} else {
+			doc = "chelp";
+		}
+		try{
+			BufferedReader in = new BufferedReader(new FileReader("docs/" + doc + ".txt"));
 			try{
-				BufferedReader in = new BufferedReader(new FileReader("docs/chelp.txt"));
-				try{
-					while ((line = in.readLine()) != null){
-						clientUI.displayMessage(line);
-					}
-				} catch (IOException e){
-					clientUI.displayMessage("Error reading help file");
+				while ((line = in.readLine()) != null){
+					clientUI.displayMessage(line);
 				}
-				try {in.close();} catch(IOException e){};
-			} catch (FileNotFoundException e){
-				clientUI.displayMessage("Help file not found");
+			} catch (IOException e){
+				clientUI.displayMessage("Error reading help file");
 			}
-			break;
+			try {in.close();} catch(IOException e){};
+		} catch (FileNotFoundException e){
+			clientUI.displayMessage("Help file not found");
 		}
 	}
 

@@ -1,7 +1,9 @@
-#quit : shutdown client.
-#logoff : disconnects from current server.
-#sethost <host> : change the current host.
-#setport <port> : change the current port for server.
-#login  <ID> : logs in to the set server with optional new id.
-#gethost : displays the current host name.
-#getport : displays the current port number.
+#HELP <item> : Access specific help files. 
+  Available: chess
+#QUIT : shutdown client.
+#LOGOFF	: disconnects from current server.
+#SETHOST <host> : change the current host.
+#SETPORT <port> : change the current port for server.
+#LOGIN  <ID> : logs in to the set server with optional new id.
+#GETHOST : displays the current host name.
+#GETPORT : displays the current port number.

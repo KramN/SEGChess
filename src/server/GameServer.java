@@ -427,6 +427,7 @@ public class GameServer extends AbstractServer {
 	}
 	
 	private void reset(ConnectionToClient client){
+		//TODO Catch issues where there is no game started.
 		Game theGame = (Game) client.getInfo("Game");
 		theGame.start();
 		displayAllBoard(theGame);

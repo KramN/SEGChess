@@ -33,6 +33,5 @@ public class Testing {
 		int endX = Integer.parseInt(testMove.substring(3,4));
 		int endY = Integer.parseInt(testMove.substring(4,5));
 		System.out.println(startX + " " + startY + " " + endX + " " + endY);
-		
 	}
 }

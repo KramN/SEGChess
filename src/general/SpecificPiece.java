@@ -23,6 +23,12 @@ public class SpecificPiece {
 		
 		result = pieceType.toString();
 		
+		//TODO Hack method. Works only for chess or black/white games.
+		if (colour.getColourName().equals("Black")){
+			result = result.toLowerCase();
+		}
+		
+		
 		return result;
 	}
 	

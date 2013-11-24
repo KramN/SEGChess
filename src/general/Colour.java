@@ -23,6 +23,7 @@ public class Colour  {
 	}
 	
 	// GETTERS
+	public String getColourName(){ return colourName; }
 	// SETTERS
 	public void setPiece(SpecificPiece piece){
 		pieceList.add(piece);
