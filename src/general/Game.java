@@ -10,6 +10,7 @@ public abstract class Game {
 
 	//Game Attributes
 	private String name;
+	private boolean isStarted;
 
 	//Game Associations
 	private Board board;
@@ -21,6 +22,7 @@ public abstract class Game {
 		name = aName;
 		players = new ArrayList<Player>();
 		colours = new ArrayList<Colour>();
+		isStarted = false;
 	}
 	
 	// ABSTRACT METHODS
@@ -31,6 +33,14 @@ public abstract class Game {
 	public abstract boolean isReadyToStart();
 	public abstract boolean move(String move, Player player);
 	
+	//GETTERS
+	public boolean isStarted(){
+		return isStarted;
+	}
+	//SETTERS
+	public void setIsStarted(boolean started){
+		isStarted = started;
+	}
 	
 	//CLASS METHODS
 	public void movePiece(int startX, int startY, int endX, int endY){

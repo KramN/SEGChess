@@ -201,6 +201,11 @@ public class GameServer extends AbstractServer {
 			String argument = message.substring(message.indexOf(' ') + 1);
 			client.setInfo("loginID", argument);
 			sendToAllClients(client.getInfo("loginID") + " has joined the chat.");
+			try {
+				client.sendToClient("Type #help for help.");
+			} catch (IOException e){
+				console.display("Could not help new user.");
+			}
 		}
 	}
 
@@ -427,7 +432,7 @@ public class GameServer extends AbstractServer {
 	}
 	
 	private boolean hasGame(Game game, ConnectionToClient client){
-		if (game == null){
+		if (game == null || !game.isStarted()){
 			try{
 				client.sendToClient("No current game.");
 			} catch (IOException e){

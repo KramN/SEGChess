@@ -1,5 +1,15 @@
 NOTES:
 
+ERROR: Move cna disconnect 
+
+FOR DECEMBER 2ND:
+Implement test cases.
+Revise assignment 5 document.
+Comment code.
+
+
+
+IMPROVE SYSTEM:
 URGENT: Can currently wipeout current game with newgame if same name.
 URGENT: Display board method currents sends string representation of board.
 URGENT: Handle promotion.
@@ -11,4 +21,4 @@ Currently the player who sets up the game is white.
 
 Split Server/Client commands into separate methods.
 
-Server to send #help to new connects.
+Can currently move "##?##???????????" with valid move.

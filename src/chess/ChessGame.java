@@ -21,6 +21,8 @@ public class ChessGame extends Game {
 		//populate board with chess pieces
 		//will need to have set the players (white and black) at this point to properly construct piece objects
 		initializeChessBoard();
+		
+		setIsStarted(true);
 	}
 	
 	  public int maximumNumberOfPlayers()
@@ -75,10 +77,14 @@ public class ChessGame extends Game {
 		int startX, startY, endX, endY;
 		Board board = getBoard();
 		
-		startX = Integer.parseInt(move.substring(0,1));
-		startY = Integer.parseInt(move.substring(1,2));
-		endX = Integer.parseInt(move.substring(3,4));
-		endY = Integer.parseInt(move.substring(4,5));
+		try{
+			startX = Integer.parseInt(move.substring(0,1));
+			startY = Integer.parseInt(move.substring(1,2));
+			endX = Integer.parseInt(move.substring(3,4));
+			endY = Integer.parseInt(move.substring(4,5));
+		} catch (Exception e){
+			return wasMoved;
+		}
 		
 		wasMoved = board.movePiece(startX, startY, endX, endY);
 		
