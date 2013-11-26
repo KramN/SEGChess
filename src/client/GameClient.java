@@ -194,7 +194,7 @@ public class GameClient extends AbstractClient {
 			}
 			try {in.close();} catch(IOException e){};
 		} catch (FileNotFoundException e){
-			clientUI.displayMessage("Help file not found");
+			clientUI.displayMessage("Help file not found. Try moving /docs to /bin or to root directory.");
 		}
 	}
 
