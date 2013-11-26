@@ -11,10 +11,7 @@ import chess.*;
 
 public class GameServer extends AbstractServer {
 
-	/**
-	 * UI for the user interactions.
-	 */
-	ServerConsole console;
+	ServerConsole console; // UI for console interaction.
 
 	List<Game> game;
 
@@ -111,7 +108,7 @@ public class GameServer extends AbstractServer {
 	 */
 	protected void serverStarted()
 	{
-		System.out.println
+		console.display
 		("Server listening for connections on port " + getPort() + ".");
 	}
 
@@ -121,7 +118,7 @@ public class GameServer extends AbstractServer {
 	 */
 	protected void serverStopped()
 	{
-		System.out.println
+		console.display
 		("Server has stopped listening for connections.");
 	}
 
@@ -181,6 +178,7 @@ public class GameServer extends AbstractServer {
 			}
 		}
 	}
+	
 	/**
 	 * Private method for handling the actual log in process for users.
 	 * 
@@ -344,11 +342,17 @@ public class GameServer extends AbstractServer {
 		}
 	}
 
+	/**
+	 * Finds the index of a game based on the string name.
+	 * 
+	 * @param name Name of game to be found.
+	 * @return index of game. Returns '-1' if game not found.
+	 */
 	private int getIndexOfGame(String name){
 		int index = -1;
 
 		for (int i = 0; i < game.size(); i++){
-			//TODO Fix law of demeter thing below.
+			//TODO Fix this line below. Too many sub-calls.
 			if (game.get(i).getName().equals(name)){
 				index = i;
 			}
@@ -356,10 +360,6 @@ public class GameServer extends AbstractServer {
 
 		return index;
 	}
-	
-	//////////////// NEEDED COMMANDS /////////
-	//TODO move <xy> to <xy>
-	//restart
 
 	private enum ClientCommand{
 		JOIN, MOVE, NEWCHESS, DISPLAYBOARD, RESET, TEST
@@ -431,6 +431,14 @@ public class GameServer extends AbstractServer {
 		}
 	}
 	
+	/**
+	 * Tests whether the client is assigned to a game.
+	 * TODO Modify it to return only a boolean value and not send client message.
+	 * 
+	 * @param game
+	 * @param client
+	 * @return returns whether the user has a game or not.
+	 */
 	private boolean hasGame(Game game, ConnectionToClient client){
 		if (game == null || !game.isStarted()){
 			try{
