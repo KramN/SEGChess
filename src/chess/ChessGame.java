@@ -3,7 +3,6 @@ package chess;
 
 import general.*;
 import chess.piece.*;
-import java.util.*;
 
 public class ChessGame extends Game {
 	
