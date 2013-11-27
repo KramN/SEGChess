@@ -18,6 +18,8 @@ public class Server extends AbstractServer {
 	public Server(int port){
 		super(port);
 		console = new ServerConsole(this);
+		
+		init(); //hook
 
 		try 
 		{
@@ -46,6 +48,9 @@ public class Server extends AbstractServer {
 		// Associates the EchoServer with a console UI.
 		this.console = console;
 	}
+	
+	//Hook method.
+	protected void init(){}
 
 	//////////////// HOOK METHODS ////////////////////
 
@@ -314,29 +319,31 @@ public class Server extends AbstractServer {
 		}
 	}
 
-	public static void main(String[] args) 
-	{
-		int port = 0; //Port to listen on
-
-		try
-		{
-			port = Integer.parseInt(args[0]); //Get port from command line
-		}
-		catch(Throwable t)
-		{
-			port = DEFAULT_PORT; //Set port to 5555
-		}
-
-		GameServer server = new GameServer(port);
-
-		try 
-		{
-			server.listen(); //Start listening for connections
-		} 
-		catch (Exception ex) 
-		{
-			System.out.println("ERROR - Could not listen for clients!");
-		}
-	}
+	
+// Old main method. Run GameServer instead.
+//	public static void main(String[] args) 
+//	{
+//		int port = 0; //Port to listen on
+//
+//		try
+//		{
+//			port = Integer.parseInt(args[0]); //Get port from command line
+//		}
+//		catch(Throwable t)
+//		{
+//			port = DEFAULT_PORT; //Set port to 5555
+//		}
+//
+//		Server server = new Server(port);
+//
+//		try 
+//		{
+//			server.listen(); //Start listening for connections
+//		} 
+//		catch (Exception ex) 
+//		{
+//			System.out.println("ERROR - Could not listen for clients!");
+//		}
+//	}
 	
 }

@@ -84,7 +84,7 @@ public class GameClient extends AbstractClient {
 	 * Enum constants for commands from the user.
 	 */
 	private enum Command{
-		QUIT, LOGOFF, SETHOST, SETPORT, LOGIN, GETHOST, GETPORT, HELP
+		QUIT, LOGOUT, SETHOST, SETPORT, LOGIN, GETHOST, GETPORT, HELP
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class GameClient extends AbstractClient {
 		//Handles each valid command individually.
 		switch (command) {
 		case QUIT: quit(); break;
-		case LOGOFF: 
+		case LOGOUT: 
 			try {
 				closeConnection();
 			} catch (IOException e) {}

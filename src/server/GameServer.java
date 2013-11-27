@@ -16,7 +16,6 @@ public class GameServer extends Server {
 
 	public GameServer(int port){
 		super(port);
-		game = new ArrayList<Game>();
 	}
 
 	/**
@@ -29,7 +28,37 @@ public class GameServer extends Server {
 	public GameServer(int port, ServerConsole console) 
 	{
 		super(port);
+	}
+	
+	//Initialize game list.
+	@Override
+	protected void init(){
 		game = new ArrayList<Game>();
+	}
+	
+	public static void main(String[] args) 
+	{
+		int port = 0; //Port to listen on
+
+		try
+		{
+			port = Integer.parseInt(args[0]); //Get port from command line
+		}
+		catch(Throwable t)
+		{
+			port = DEFAULT_PORT; //Set port to 5555
+		}
+
+		GameServer server = new GameServer(port);
+
+		try 
+		{
+			server.listen(); //Start listening for connections
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println("ERROR - Could not listen for clients!");
+		}
 	}
 
 
@@ -53,8 +82,26 @@ public class GameServer extends Server {
 		return index;
 	}
 
+	// Enum for storing possible client commands.
 	private enum ClientCommand{
-		JOIN, MOVE, NEWCHESS, DISPLAYBOARD, RESET, TEST
+		JOIN, MOVE, NEWCHESS, DISPLAYBOARD, RESET, START, TEST
+	}
+	
+	private ClientCommand getClientCommand(String message){
+		ClientCommand command;
+		String argument;
+		
+		//Checking to see if command from user has any arguments.
+		//Checks for a space to determine if an argument is present.
+		if (message.indexOf(' ') == -1){
+			argument = message.substring(1);
+		} else {
+			argument = message.substring(1, message.indexOf(' '));
+		}
+		
+		command = ClientCommand.valueOf(argument.toUpperCase());
+		
+		return command;
 	}
 
 	/**
@@ -64,16 +111,18 @@ public class GameServer extends Server {
 	 */
 	@Override
 	protected void handleCommandFromUser(String message, ConnectionToClient client){
-		String argument;
 		String parameter = "";
 		ClientCommand command = null;
 
-		//Checking to see if command from user has any arguments.
-		//Checks for a space to determine if an argument is present.
-		if (message.indexOf(' ') == -1){
-			argument = message.substring(1);
-		} else {
-			argument = message.substring(1, message.indexOf(' '));
+		try {
+			command = getClientCommand(message);
+		} catch (IllegalArgumentException e){
+			try {
+				client.sendToClient("Bad Command. Try again.");
+			} catch (IOException e2){
+				console.display("Could not send message to client: Bad command.");
+			}
+			return;
 		}
 
 		//Getting parameter if one exists.
@@ -81,17 +130,7 @@ public class GameServer extends Server {
 			parameter = message.substring(message.indexOf(' ')+1);
 		}
 
-		//Handling cases where user inputs invalid command.
-		try {
-			command = ClientCommand.valueOf(argument.toUpperCase());
-		} catch (IllegalArgumentException e){
-			try {
-				client.sendToClient("Bad Command. Try again.");
-			} catch (IOException e2){
-				System.out.println("Could not send message to client: Bad command.");
-			}
-			return;
-		}
+
 
 		switch (command) {
 		case JOIN:
@@ -113,59 +152,108 @@ public class GameServer extends Server {
 		case RESET:
 			reset(client);
 			break;
+		case START:
+			startGame(client);
+			break;
 		case TEST:
 			//TODO Create object output stream and update all passing of game string stuff.
 			try{
 				client.sendToClient(new ChessGame("Debug"));
 			} catch (IOException e){
-				System.out.println("TESTING FAILED");
+				console.display("TESTING FAILED");
 			}
+			break;
+		default:
 			break;
 		}
 	}
 	
-	/**
-	 * Tests whether the client is assigned to a game.
-	 * TODO Modify it to return only a boolean value and not send client message.
-	 * 
-	 * @param game
-	 * @param client
-	 * @return returns whether the user has a game or not.
-	 */
+	// Checks if the user has a running game.
+	// Used when user sends commands that depend on started game.
 	private boolean hasGame(Game game, ConnectionToClient client){
-		if (game == null || !game.isStarted()){
-			try{
-				client.sendToClient("No current game.");
-			} catch (IOException e){
-				console.display("Unable to send null game error to " + client);
-			}
-			return false;
-		} else {
-			return true;
-		}
-			
+		return (game != null && game.isStarted());	
 	}
 	
+	// Sends game state to all players of game.
+	// TODO Update to send Object instead of String.
+	private void displayAllBoard(Game game){
+		messageGame(game, game.toString());
+	}
+	
+	// Sends message to all players in a game.
+	private void messageGame(Game game, Object msg){
+		List<Player> players = game.getPlayers();
+		for (Player p : players){
+			p.sendToPlayer(msg);
+		}
+	}
+	
+	// Returns a reference to the client's current game.
+	private Game getClientGame(ConnectionToClient client){
+		return (Game) client.getInfo("Game");
+	}
+	
+	// Starts the game if possible.
+	private void startGame(ConnectionToClient client){
+		Game theGame = getClientGame(client);
+		if (theGame == null){
+			try {
+				client.sendToClient("Unable to start game. See #HELP CHESS for starting new game.");
+			} catch (IOException e){
+				console.display("Unable to send start game error to " + client);
+			}
+			return;
+		}
+		
+		if (theGame.isReadyToStart()){
+			theGame.start();
+			displayAllBoard(theGame);
+		} else {
+			try {
+				client.sendToClient("Unable to start game. Check if right amount of players.");
+			} catch (IOException e){
+				console.display("Unable to send start game error to " + client);
+			}
+		}
+	}
+	
+	// Resets the client's current game.
 	private void reset(ConnectionToClient client){
-		//TODO Catch issues where there is no game started.
-		Game theGame = (Game) client.getInfo("Game");
+		Game theGame = getClientGame(client);
 		if (hasGame(theGame, client)){
 			theGame.start();
 			displayAllBoard(theGame);
+		} else {
+			try {
+				client.sendToClient("No current game to reset.");
+			} catch (IOException e){
+				console.display("Unable to send " + client + " reset error message.");
+			}
 		}
 	}
 	
+	// Sends user the current state of the game.
+	// TODO Update to send Object instead of Strings.
 	private void displayBoard(ConnectionToClient client){
-		Game theGame = (Game) client.getInfo("Game");
+		Game theGame = getClientGame(client);
 		if (hasGame(theGame, client)){
 			try{
 				client.sendToClient(theGame.toString());
 			} catch (IOException e){
 				console.display("Unable to send game state to " + client);
 			}
+		} else {
+			try {
+				client.sendToClient("No current game to display.");
+			} catch (IOException e){
+				console.display("Unable to send " + client + " displayboard error message.");
+			}
 		}
 	}
-
+	
+	
+	// Allows a player to join a game ready to start.
+	// Starts the game if ready.
 	private void joinGame(String name, ConnectionToClient client){
 
 		int index = getIndexOfGame(name);
@@ -175,7 +263,7 @@ public class GameServer extends Server {
 				client.sendToClient("Game does not exist.");
 				return;
 			} catch (IOException e){
-				System.out.println("Unable to send non-existant game name error to client");
+				console.display("Unable to send non-existant game name error to client");
 			}
 		}
 
@@ -188,20 +276,17 @@ public class GameServer extends Server {
 			client.setInfo("Game", theGame);
 			client.setInfo("Player", thePlayer);
 			messageGame(theGame, client.getInfo("loginID") + " has joined " + theGame.getName() + ".");
-			if (theGame.isReadyToStart()){
-				theGame.start();
-				displayAllBoard(theGame);
-			}
 		} else {
 			try {
 				client.sendToClient("Unable to join game. Likely full.");
 			} catch(IOException e){
-				System.out.println("Unable to send join game error to client");
+				console.display("Unable to send join game error to client");
 			}
 		}
 
 	}
 
+	// Handles the move command. Current expected syntax : #move <xy> <xy>
 	private void move(String move, ConnectionToClient client) throws IOException{
 		Game game = (Game) client.getInfo("Game");
 		if (hasGame(game, client)){
@@ -220,10 +305,16 @@ public class GameServer extends Server {
 			} catch (NoPieceException e){
 				client.sendToClient("No piece to move.");
 			}
+		} else {
+			try {
+				client.sendToClient("Cannot move pieces in non-existant game!");
+			} catch (IOException e){
+				console.display("Unable to send " + client + "move error.");
+			}
 		}
 	}
 
-
+	// Sets up a new chess game based on name given by user.
 	private void newChessGame(String name, ConnectionToClient client){
 		console.display("New game requested by " + client);
 		if (name.equals("")){
@@ -231,17 +322,17 @@ public class GameServer extends Server {
 				client.sendToClient("Invalid game name");
 				return;
 			} catch (IOException e){
-				System.out.println("Unable to send game name error to client");
+				console.display("Unable to send game name error to client");
 			}
 		}
 
 		//Checks to see if game name already taken.
-		if (game.contains(name)){
+		if (getIndexOfGame(name) != -1){
 			try{
 				client.sendToClient("Game name already taken.");
 				return;
 			} catch (IOException e){
-				System.out.println("Unable to send duplicate game name error to client");
+				console.display("Unable to send duplicate game name error to client");
 			}
 		}
 
@@ -255,23 +346,12 @@ public class GameServer extends Server {
 		client.setInfo("Player", thePlayer);
 
 		try {
+			this.sendToAllClients(client.getInfo("loginID") + " has created new game: " + name);
 			client.sendToClient("Game started successfully." + newline + 
-			"Waiting for other player.");
+			"Waiting for other players.");
 		} catch (IOException e){
-			System.out.println("Could not send message to client: Game start.");
+			console.display("Could not send message to client: Game start.");
 		}
 
 	}
-	
-	private void displayAllBoard(Game game){
-		messageGame(game, game.toString());
-	}
-	
-	private void messageGame(Game game, Object msg){
-		List<Player> players = game.getPlayers();
-		for (Player p : players){
-			p.sendToPlayer(msg);
-		}
-	}
-
 }

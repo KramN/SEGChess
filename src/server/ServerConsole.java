@@ -35,7 +35,7 @@ public class ServerConsole implements ChatIF {
 	/**
 	 * The instance of the server that created this interface or is created by this interface.
 	 */
-	Server server;
+	private Server server;
 
 
 	//Constructors ****************************************************
@@ -57,7 +57,7 @@ public class ServerConsole implements ChatIF {
 	 */
 	public ServerConsole(int port) 
 	{
-		server = new Server(port, this);
+		server = new GameServer(port, this);
 
 		try 
 		{
@@ -118,9 +118,8 @@ public class ServerConsole implements ChatIF {
 	 */
 	public static void main(String[] args) 
 	{
-		int port = 0;  //The port number
+		int port = 0;
 
-		// **** Changed for E49 - MK, PS
 		try{
 			port = Integer.parseInt(args[0]);
 		}
