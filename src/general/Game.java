@@ -100,6 +100,16 @@ public abstract class Game {
 		return wasAdded;
 	}
 	
+	public boolean removePlayer(Player aPlayer){
+		boolean wasRemoved = false;
+		if (!playersContains(aPlayer)) { return false; }
+		
+		players.remove(aPlayer);
+		wasRemoved = true;
+		
+		return wasRemoved;
+	}
+	
 	// COLOUR LIST METHODS
 	
 	public boolean coloursContains(Colour colour){
