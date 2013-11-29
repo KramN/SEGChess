@@ -61,6 +61,23 @@ public class GameServer extends Server {
 		}
 	}
 
+	/**
+	 * Hook method called each time a client disconnects.
+	 * Updated to see if player currently in game and lower the # of players in that game.
+	 *
+	 * @param client the connection with the client.
+	 */
+	synchronized protected void clientDisconnected(
+			ConnectionToClient client) {
+		super.clientDisconnected(client);
+		
+		Game game;
+		Player player;
+		if ((game = getClientGame(client)) != null){
+			player = getClientPlayer(client);
+			game.removePlayer(player);
+		}
+	}
 
 
 	/**
@@ -193,6 +210,11 @@ public class GameServer extends Server {
 		return (Game) client.getInfo("Game");
 	}
 	
+	// Returns a reference to the client's current player object.
+	private Player getClientPlayer(ConnectionToClient client){
+		return (Player) client.getInfo("Player");
+	}
+	
 	// Starts the game if possible.
 	private void startGame(ConnectionToClient client){
 		Game theGame = getClientGame(client);
@@ -290,7 +312,7 @@ public class GameServer extends Server {
 	private void move(String move, ConnectionToClient client) throws IOException{
 		Game game = (Game) client.getInfo("Game");
 		if (hasGame(game, client)){
-			Player player = (Player)client.getInfo("Player");
+			Player player = getClientPlayer(client);
 			boolean wasMoved = false;
 
 			try {
