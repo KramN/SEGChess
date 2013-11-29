@@ -1,14 +1,17 @@
 package general;
+import java.io.Serializable;
 import java.util.*;
 /**
  * 
  * This class links a player to all of his or her pieces, and assigns those pieces a colour.
  * 
  */
-public class Colour  {
+public class Colour implements Serializable  {
 	
+	private static final long serialVersionUID = 2492089274183738188L;
+
 	// INSTANCE VARIABLES
-	
+
 	private Player              player;
 	
 	private String              colourName;

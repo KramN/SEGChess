@@ -5,6 +5,9 @@ import java.util.List;
 import general.*;
 
 public class Queen extends PieceType {
+
+	private static final long serialVersionUID = -5825695185626555L;
+
 	//CONSTRUCTOR
 	public Queen(Board board){
 		super(board);

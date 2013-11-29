@@ -1,6 +1,7 @@
 NOTES:
 
 FOR DECEMBER 2ND:
+Split out UI from all the chess classes as much as possible.
 Implement test cases.
 Revise assignment 5 document.
 Comment code.

@@ -5,6 +5,9 @@ import java.util.List;
 import general.*;
 
 public class Rook extends PieceType { 
+
+	private static final long serialVersionUID = -7521860270193363924L;
+
 	//CONSTRUCTOR
 	public Rook(Board board){
 		super(board);

@@ -5,6 +5,9 @@ import java.util.List;
 import general.*;
 
 public class Bishop extends PieceType {
+
+	private static final long serialVersionUID = -1268924152528076600L;
+
 	//CONSTRUCTOR
 	public Bishop(Board board){
 		super(board);

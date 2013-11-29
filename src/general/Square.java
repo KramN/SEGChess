@@ -1,8 +1,11 @@
 package general;
 
-public class Square {
+import java.io.Serializable;
+
+public class Square implements Serializable {
 	
-	
+	private static final long serialVersionUID = 6855502952320772867L;
+
 	//------------------------
 	// MEMBER VARIABLES
 	//------------------------

@@ -1,11 +1,19 @@
+import java.io.IOException;
+
+import client.ClientConsole;
+import client.GameClient;
+import server.GameServer;
 import chess.*;
 import general.*;
 
 
 public class Testing {
 	
+	final public static String newline = System.getProperty("line.separator");
+	public static final int DEFAULTPORT = 5555; 
+	
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException {
 		Game theGame = new ChessGame("Test");
 		theGame.setupBoard();
 		
@@ -42,7 +50,33 @@ public class Testing {
 		
 		System.out.println("Parsed move: " + startX + " " + startY + " " + endX + " " + endY);
 		
-		//Testing Color
-		System.out.println((char)27 + "[2J");
+
+		//Testing Object Passing.
+		//TODO WRITE MORE TEST CASES HERE.
+		Thread thread1 = new Thread();
+
+		@SuppressWarnings("unused")
+		GameServer testServer = new GameServer(DEFAULTPORT);
+		System.out.println(newline + newline + "SERVER TESTING");
+		ClientConsole cConsole= new ClientConsole("Kasparov", "localhost", DEFAULTPORT);
+		GameClient testClient = new GameClient("Kasparov", "localhost", DEFAULTPORT, cConsole);
+		
+		
+		testClient.sendToServer("Hello World");
+		
+		
+
+		
+		//testServer.listen();
+		//testClient.openConnection();
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
