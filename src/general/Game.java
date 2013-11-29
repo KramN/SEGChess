@@ -1,8 +1,11 @@
 package general;
 
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Game {
+public abstract class Game implements Serializable {
+
+	private static final long serialVersionUID = 1208917428440743530L;
 	
 	//------------------------
 	// MEMBER VARIABLES
@@ -45,14 +48,6 @@ public abstract class Game {
 	//CLASS METHODS
 	public void movePiece(int startX, int startY, int endX, int endY){
 		board.movePiece(startX, startY, endX, endY);
-	}
-	
-	public String toString(){
-		String result;
-		
-		result = board.toString();
-		
-		return result;
 	}
 
 	public String getName(){
@@ -151,7 +146,17 @@ public abstract class Game {
 		this.board = board;
 	}
 	
-	
+	public String toString(){
+		String result;
+		
+		if (getBoard() != null){
+			result = board.toString();
+		} else {
+			result = "No board to display.";
+		}
+		
+		return result;
+	}
 
 	
 	

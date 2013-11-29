@@ -7,6 +7,7 @@ import java.util.*;
 
 import general.*;
 import chess.*;
+import chess.piece.Pawn;
 
 public class GameServer extends Server {
 
@@ -34,31 +35,6 @@ public class GameServer extends Server {
 	@Override
 	protected void init(){
 		game = new ArrayList<Game>();
-	}
-	
-	public static void main(String[] args) 
-	{
-		int port = 0; //Port to listen on
-
-		try
-		{
-			port = Integer.parseInt(args[0]); //Get port from command line
-		}
-		catch(Throwable t)
-		{
-			port = DEFAULT_PORT; //Set port to 5555
-		}
-
-		GameServer server = new GameServer(port);
-
-		try 
-		{
-			server.listen(); //Start listening for connections
-		} 
-		catch (Exception ex) 
-		{
-			System.out.println("ERROR - Could not listen for clients!");
-		}
 	}
 
 	/**
@@ -173,12 +149,7 @@ public class GameServer extends Server {
 			startGame(client);
 			break;
 		case TEST:
-			//TODO Create object output stream and update all passing of game string stuff.
-			try{
-				client.sendToClient(new ChessGame("Debug"));
-			} catch (IOException e){
-				console.display("TESTING FAILED");
-			}
+			test(parameter, client);
 			break;
 		default:
 			break;
@@ -376,4 +347,43 @@ public class GameServer extends Server {
 		}
 
 	}
+	
+	public static void main(String[] args) 
+	{
+		int port = 0; //Port to listen on
+
+		try
+		{
+			port = Integer.parseInt(args[0]); //Get port from command line
+		}
+		catch(Throwable t)
+		{
+			port = DEFAULT_PORT; //Set port to 5555
+		}
+
+		GameServer server = new GameServer(port);
+
+		try 
+		{
+			server.listen(); //Start listening for connections
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println("ERROR - Could not listen for clients!");
+		}
+	}
+
+	//Client-cmd to run test method below using #TEST.
+	public void test(String parameter, ConnectionToClient client){
+		//TODO Create object output stream and update all passing of game string stuff.
+		Game debug = new ChessGame("Debug");
+		TestObject test = new TestObject2("Meh");
+		
+		try{
+			client.sendToClient(debug);
+		} catch (IOException e){
+			console.display("TESTING FAILED");
+		}
+	}
+	
 }

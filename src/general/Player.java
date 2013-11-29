@@ -3,9 +3,11 @@ package general;
 import ocsf.server.*;
 import java.io.*;
 
-public class Player {
+public class Player implements Serializable {
 	
+	private static final long serialVersionUID = 6734234661870795872L;
 	// INSTANCE VARIABLES
+
 	private Colour colour;
 	private Game game;
 	private ConnectionToClient client;

@@ -1,14 +1,19 @@
 package general;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Board {
+public class Board implements Serializable {
 	
+	private static final long serialVersionUID = 1363663420719796603L;
+
+
 	//------------------------
 	// MEMBER VARIABLES
 	//------------------------
-	
+
+
 	private int rows, cols;
 
 	

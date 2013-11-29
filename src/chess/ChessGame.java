@@ -5,7 +5,9 @@ import general.*;
 import chess.piece.*;
 
 public class ChessGame extends Game {
-	
+
+	private static final long serialVersionUID = 3158567182638032568L;
+
 	public ChessGame(String name){
 		super(name);
 		addToColours(new Colour("White"));

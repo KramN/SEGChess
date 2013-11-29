@@ -15,6 +15,7 @@ public class Server extends AbstractServer {
 	final public static int DEFAULT_PORT = 5555;
 	final public static String newline = System.getProperty("line.separator");
 
+	//CONSTRUCTORS
 	public Server(int port){
 		super(port);
 		console = new ServerConsole(this);
