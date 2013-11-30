@@ -218,7 +218,7 @@ public class GameClient extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 		clientUI.displayMessage("Interpreting message from server. " + msg.getClass());
 		if (msg instanceof Board){ //TODO Change this to displaying Boards once objects figured out.
-			clientUI.displayMessage(msg.toString());
+			clientUI.displayBoard((Board) msg);
 		} else {
 			clientUI.displayMessage(msg.toString());
 		}

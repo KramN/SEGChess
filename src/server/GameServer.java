@@ -189,7 +189,7 @@ public class GameServer extends Server {
 	// Starts the game if possible.
 	private void startGame(ConnectionToClient client){
 		Game theGame = getClientGame(client);
-		if (theGame == null){
+		if (theGame == null){ //Checks if the client has a game.
 			try {
 				client.sendToClient("Unable to start game. See #HELP CHESS for starting new game.");
 			} catch (IOException e){
@@ -198,9 +198,9 @@ public class GameServer extends Server {
 			return;
 		}
 		
-		if (theGame.isReadyToStart()){
+		if (theGame.isReadyToStart()){ //Checks if the game is ready to start before starting.
 			theGame.start();
-			displayAllBoard(theGame);
+			this.messageGame(theGame, theGame.getBoard());//sends all players a first state copy of the board
 		} else {
 			try {
 				client.sendToClient("Unable to start game. Check if right amount of players.");
@@ -231,7 +231,8 @@ public class GameServer extends Server {
 		Game theGame = getClientGame(client);
 		if (hasGame(theGame, client)){
 			try{
-				client.sendToClient(theGame.toString());
+				Board theBoard = theGame.getBoard();
+				client.sendToClient(theBoard);
 			} catch (IOException e){
 				console.display("Unable to send game state to " + client);
 			}
