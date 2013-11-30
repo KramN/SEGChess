@@ -119,7 +119,6 @@ public class Testing {
 //		
 //		testClient.sendToServer("Hello World");
 //		
-		
 
 		
 		//testServer.listen();
