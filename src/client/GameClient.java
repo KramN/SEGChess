@@ -204,7 +204,8 @@ public class GameClient extends AbstractClient {
 	public void help(String argument){
 		String line;
 		String doc;
-		if (argument.equals("chess")){
+		argument = argument.toUpperCase();
+		if (argument.equals("CHESS")){
 			doc = "chess";
 		} else {
 			doc = "chelp";
@@ -251,8 +252,15 @@ public class GameClient extends AbstractClient {
 	//Test method to be called once connected to server using #TEST.
 	private void test() throws IOException, InterruptedException {
 		
-		clientUI.displayMessage("Sending various test strings.");
+		clientUI.displayMessage("TESTING #HELP.");
+		handleCommand("#help");
+		
 		clientUI.displayMessage(newline);
+		clientUI.displayMessage("TESTING #HELP CHESS.");
+		handleCommand("#HELP CHESS");
+		
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("SENDING VARIOUS TEST STRINGS.");
 		sendToServer("Hello World!");
 		sendToServer("");
 		
