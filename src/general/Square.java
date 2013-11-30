@@ -12,7 +12,7 @@ public class Square implements Serializable {
 	private boolean hasPiece;
 	
 	//Square Associations
-	SpecificPiece thePiece;
+	private SpecificPiece thePiece;
 
 	public Square(){
 		hasPiece = false;

@@ -6,8 +6,12 @@ public class Move implements Serializable {
 
 	private static final long serialVersionUID = -4921105678876999666L;
 	
-	protected String move;
+	// ASSOCIATIONS
 	protected Game game;
+	
+	// INSTANCE VARIABLES
+	protected String move;
+	
 
 	public Move(String move) {
 		this.move = move;

@@ -10,13 +10,16 @@ public class Colour implements Serializable  {
 	
 	private static final long serialVersionUID = 2492089274183738188L;
 
-	// INSTANCE VARIABLES
 
+	// ASSOCIATIONS
+	
 	private Player              player;
 	
-	private String              colourName;
-	
 	private List<SpecificPiece> pieceList;
+	
+	// INSTANCE VARIABLES
+	
+	private String              colourName;
 	
 	// CONSTRUCTORS
 	public Colour(String colourName){
