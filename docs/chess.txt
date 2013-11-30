@@ -1,0 +1,6 @@
+#NEWCHESS <game> : creates new chess game with name.
+#JOIN <game> : joins a game based on the name.
+#START : starts the chess game.
+#MOVE <xy xy> : moves piece at xy to xy.
+#DISPLAYBOARD : displays the board.
+#RESET : resets the board.

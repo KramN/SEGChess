@@ -84,7 +84,7 @@ public class GameClient extends AbstractClient {
 	 * Enum constants for commands from the user.
 	 */
 	private enum Command{
-		QUIT, LOGOFF, SETHOST, SETPORT, LOGON, GETHOST, GETPORT, HELP
+		QUIT, LOGOUT, LOGOFF, SETHOST, SETPORT, LOGIN, LOGON, GETHOST, GETPORT, HELP
 	}
 
 	/**
@@ -125,6 +125,7 @@ public class GameClient extends AbstractClient {
 		//Handles each valid command individually.
 		switch (command) {
 		case QUIT: quit(); break;
+		case LOGOUT: //Runs same syntax as LOGOFF
 		case LOGOFF: 
 			try {
 				closeConnection();
@@ -155,6 +156,7 @@ public class GameClient extends AbstractClient {
 				clientUI.displayMessage("Must logoff before setting a new port!");
 			}
 			break;
+		case LOGIN: // Runs same syntax as LOGON.
 		case LOGON:
 			if (!isConnected()){
 				//Updating loginID if a new one is provided.
