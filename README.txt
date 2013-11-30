@@ -7,8 +7,12 @@ Revise assignment 5 document.
 Comment code.
 Implement Getters/Setters.
 Attempt to pass objects from server to client.
+Include comments on how to start/run system.
+Add comment about how associations are used for later expansion
+	Player -- SpecificPiece
+	Class square could be eliminated but may also be useful for other game variants where extending Square could be useful for storing properties.
 
-
+Add Move class to UML diagram?
 
 ERROR: Move can disconnect (Fixed?)
 

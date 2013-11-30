@@ -7,6 +7,8 @@ public abstract class PieceType implements Serializable {
 
 	private static final long serialVersionUID = -2509557331254011663L;
 	
+	// ASSOCIATIONS
+	
 	protected Board board;
 	
 	public PieceType(Board board){
