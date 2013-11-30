@@ -5,10 +5,20 @@ import java.io.*;
 import general.*;
 
 public class GameClient extends AbstractClient {
-
-	GameIF clientUI;
+	
+	//----------------------------
+	// MEMBER VARIABLLES
+	//----------------------------
+	
+	//ASSOCIATIONS
+	private GameIF clientUI;
 	private String loginID;
-
+	
+	final public static String newline = System.getProperty("line.separator");
+	
+	//----------------------------
+	// CONSTRUCTORS
+	//----------------------------
 	public GameClient(String loginID, String host, int port, GameIF clientUI) 
 	{
 		super(host, port); //Call the superclass constructor
@@ -177,7 +187,7 @@ public class GameClient extends AbstractClient {
 		case TEST:
 			try {
 				test();
-			} catch (IOException e){
+			} catch (Exception e){
 				clientUI.displayMessage("Error in testing: " + e);
 			}
 			 break;
@@ -185,10 +195,17 @@ public class GameClient extends AbstractClient {
 		
 	}
 	
+	/**
+	 * Sends the help document to the UI to display. Allows optional arguments.
+	 * 
+	 * @param argument help file to access.
+	 */
+	
 	public void help(String argument){
 		String line;
 		String doc;
-		if (argument.equals("chess")){
+		argument = argument.toUpperCase();
+		if (argument.equals("CHESS")){
 			doc = "chess";
 		} else {
 			doc = "chelp";
@@ -222,23 +239,102 @@ public class GameClient extends AbstractClient {
 	}
 
 
-
-
+	// Responsible for handling messages from server.
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		clientUI.displayMessage("Interpreting message from server. " + msg.getClass());
-		if (msg instanceof Board){ //TODO Change this to displaying Boards once objects figured out.
+		if (msg instanceof Board){ //TODO Change this send board objects to UI.
 			clientUI.displayBoard((Board) msg);
 		} else {
 			clientUI.displayMessage(msg.toString());
 		}
 	}
 	
-	private void test() throws IOException {
+	//Test method to be called once connected to server using #TEST.
+	private void test() throws IOException, InterruptedException {
+		
+		clientUI.displayMessage("TESTING #HELP.");
+		handleCommand("#help");
+		
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("TESTING #HELP CHESS.");
+		handleCommand("#HELP CHESS");
+		
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("SENDING VARIOUS TEST STRINGS.");
 		sendToServer("Hello World!");
 		sendToServer("");
 		
-		sendToServer("#test");
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("SENDING BAD COMMAND.");
+		sendToServer("#");
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("TESTING METHODS WITH NO GAME.");
+		sendToServer("#displayboard");
+		sendToServer("#join Test");
+		sendToServer("#start");
+		sendToServer("#reset");
+		Thread.sleep(1000);
+		clientUI.displayMessage("SHOULD BE ALL WARNING MESSAGES ABOVE.");
+		
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("CREATING NEW GAME.");
+		sendToServer("#newchess Test");
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("ATTEMPTING TO CREATE EXISTING GAME.");
+		sendToServer("#newchess Test");
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("RUNNING METHODS WITH NOT ENOUGH PLAYERS");
+		sendToServer("#displayboard");
+		sendToServer("#start");
+		sendToServer("#reset");		
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("JOINING AND STARTING CREATED GAME");
+		sendToServer("#join Test");
+		sendToServer("#start");
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("TESTING VARIOUS MOVES" + newline +
+				"NOTE: BOARD WILL DISPLAY TWICE PER MOVE.");
+		sendToServer("#move 14 34");
+		sendToServer("#move 64 44");
+		sendToServer("#move 06 25");
+		sendToServer("#move 71 52");
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("TESTING RESET BOARD");
+		sendToServer("#reset");
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("TESTING INVALID MOVES - CURRENTLY WORK.");
+		clientUI.displayMessage("ADD MORE TEST CASES FOR EACH PIECE ONCE IMPLEMENTED");
+		sendToServer("#move 00 77");
+		sendToServer("#move 74 04");
+		
+		Thread.sleep(1000);
+		clientUI.displayMessage("RESETTING BOARD");
+		sendToServer("#reset");
+		Thread.sleep(1000);
+		clientUI.displayMessage(newline);
+		clientUI.displayMessage("TESTING INVALID MOVES");
+		sendToServer("#move 00 88");
+		sendToServer("#move 20 77");
+		sendToServer("#move 20 88");
+		
+		
+		
+		//sendToServer("#test");
 	}
 
 }

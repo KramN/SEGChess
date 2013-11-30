@@ -107,7 +107,6 @@ public class Testing {
 		
 		// TO BE HANDLED BY PASSING #TEST FROM CLIENT TO SERVER
 		//Testing Object Passing. 
-		//TODO WRITE MORE TEST CASES HERE.
 		//Thread thread1 = new Thread();
 //
 //		@SuppressWarnings("unused")
@@ -119,7 +118,6 @@ public class Testing {
 //		
 //		testClient.sendToServer("Hello World");
 //		
-		
 
 		
 		//testServer.listen();
