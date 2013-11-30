@@ -214,7 +214,7 @@ public class GameServer extends Server {
 	private void reset(ConnectionToClient client){
 		Game theGame = getClientGame(client);
 		if (hasGame(theGame, client)){
-			theGame.start();
+			theGame.restart();
 			displayAllBoard(theGame);
 		} else {
 			try {
@@ -376,6 +376,10 @@ public class GameServer extends Server {
 
 	//Client-cmd to run test method below using #TEST.
 	public void test(String parameter, ConnectionToClient client){
+		
+		
+		
+		
 		//TODO Create object output stream and update all passing of game string stuff.
 		Game debug = new ChessGame("Debug");
 		TestObject test = new TestObject2("Meh");
