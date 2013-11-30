@@ -10,18 +10,24 @@ public class Colour implements Serializable  {
 	
 	private static final long serialVersionUID = 2492089274183738188L;
 
+	//------------------------
+	// MEMBER VARIABLES
+	//------------------------
 
-	// ASSOCIATIONS
 	
+	//Colour Associations
 	private Player              player;
 	
 	private List<SpecificPiece> pieceList;
 	
-	// INSTANCE VARIABLES
-	
+	//Colour Attributes
 	private String              colourName;
 	
-	// CONSTRUCTORS
+	
+	//------------------------
+	// CONSTRUCTOR
+	//------------------------
+	
 	public Colour(String colourName){
 	
 		this.colourName = colourName;
@@ -29,7 +35,10 @@ public class Colour implements Serializable  {
 	}
 	
 	// GETTERS
-	public String getColourName(){ return colourName; }
+	public String getColourName(){
+		return colourName; 
+	}
+	
 	// SETTERS
 	public void setPiece(SpecificPiece piece){
 		pieceList.add(piece);
@@ -38,6 +47,4 @@ public class Colour implements Serializable  {
 	public void setPlayer(Player player){
 		this.player = player;
 	}
-	// INSTANCE METHODS
-
 }
