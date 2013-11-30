@@ -84,7 +84,7 @@ public class GameClient extends AbstractClient {
 	 * Enum constants for commands from the user.
 	 */
 	private enum Command{
-		QUIT, LOGOUT, LOGOFF, SETHOST, SETPORT, LOGIN, LOGON, GETHOST, GETPORT, HELP
+		QUIT, LOGOUT, LOGOFF, SETHOST, SETPORT, LOGIN, LOGON, GETHOST, GETPORT, HELP, TEST
 	}
 
 	/**
@@ -174,7 +174,15 @@ public class GameClient extends AbstractClient {
 		case GETPORT: clientUI.displayMessage("Port: " + getPort()); break;
 		case HELP:
 			help(argument); break;
+		case TEST:
+			try {
+				test();
+			} catch (IOException e){
+				clientUI.displayMessage("Error in testing: " + e);
+			}
+			 break;
 		}
+		
 	}
 	
 	public void help(String argument){
@@ -224,6 +232,13 @@ public class GameClient extends AbstractClient {
 		} else {
 			clientUI.displayMessage(msg.toString());
 		}
+	}
+	
+	private void test() throws IOException {
+		sendToServer("Hello World!");
+		sendToServer("");
+		
+		sendToServer("#test");
 	}
 
 }
