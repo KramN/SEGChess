@@ -97,16 +97,15 @@ public class ChessGame extends Game {
 }
 
 /*
- *    0 1 2 3 4 5 6 7
  *    
- * 7  R H B Q K B H R
- * 6  P P P P P P P P
- * 5  * * * * * * * *
- * 4  * * * * * * * *
- * 3  * * * * * * * *
- * 2  * * * * * * * *
- * 1  P P P P P P P P
- * 0  R H B Q K B H R
- * 
+ * 7 R H B Q K B H R
+ * 6 P P P P P P P P
+ * 5 * * * * * * * *
+ * 4 * * * * * * * *
+ * 3 * * * * * * * *
+ * 2 * * * * * * * *
+ * 1 P P P P P P P P
+ * 0 R H B Q K B H R
+ *   0 1 2 3 4 5 6 7
  */
 
