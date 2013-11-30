@@ -33,6 +33,7 @@ public abstract class Game implements Serializable {
 	public abstract int maximumNumberOfPlayers();
 	public abstract int minimumNumberOfPlayers();
 	public abstract boolean start();
+	public abstract boolean restart();
 	public abstract boolean isReadyToStart();
 	public abstract boolean move(String move, Player player);
 	

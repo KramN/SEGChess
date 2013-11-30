@@ -71,6 +71,11 @@ public class ChessGame extends Game {
 		return true;
 	}
 	
+	
+	public boolean restart(){
+		return start();
+	}
+	
 	//TODO This method needs major overhaul
 	public boolean move(String move, Player player) 
 		throws OutsideBoardException, NoPieceException{
