@@ -22,8 +22,6 @@ public class Board implements Serializable {
 	private List<SpecificPiece> specificPieces;
 	protected List<PieceType> pieceTypes;
 
-	//do captured pieces remain in this list? **Yes**
-	//should the index of a given piece match the index of it's square's index in the square list? **No**
 	private Game game;
 	
 	//------------------------
@@ -140,6 +138,11 @@ public class Board implements Serializable {
 		}
 		
 		return result;
+	}
+
+	public Game getGame() {
+		return game;
+		
 	}
 	
 }
