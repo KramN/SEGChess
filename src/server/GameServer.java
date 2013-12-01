@@ -11,7 +11,7 @@ import chess.piece.Pawn;
 
 public class GameServer extends Server {
 
-	List<Game> game;
+	private List<Game> game;
 
 	final public static String newline = System.getProperty("line.separator");
 
@@ -200,7 +200,7 @@ public class GameServer extends Server {
 		
 		if (theGame.isReadyToStart()){ //Checks if the game is ready to start before starting.
 			theGame.start();
-			this.messageGame(theGame, theGame.getBoard());//sends all players a first state copy of the board
+			displayAllBoard(theGame);
 		} else {
 			try {
 				client.sendToClient("Unable to start game. Check if right amount of players.");
@@ -214,7 +214,7 @@ public class GameServer extends Server {
 	private void reset(ConnectionToClient client){
 		Game theGame = getClientGame(client);
 		if (hasGame(theGame, client)){
-			theGame.start();
+			theGame.restart();
 			displayAllBoard(theGame);
 		} else {
 			try {
@@ -231,8 +231,7 @@ public class GameServer extends Server {
 		Game theGame = getClientGame(client);
 		if (hasGame(theGame, client)){
 			try{
-				Board theBoard = theGame.getBoard();
-				client.sendToClient(theBoard);
+				client.sendToClient(theGame.toString());
 			} catch (IOException e){
 				console.display("Unable to send game state to " + client);
 			}
@@ -341,7 +340,7 @@ public class GameServer extends Server {
 
 		try {
 			this.sendToAllClients(client.getInfo("loginID") + " has created new game: " + name);
-			client.sendToClient("Game started successfully." + newline + 
+			client.sendToClient("Game created successfully." + newline + 
 			"Waiting for other players.");
 		} catch (IOException e){
 			console.display("Could not send message to client: Game start.");
@@ -376,9 +375,8 @@ public class GameServer extends Server {
 
 	//Client-cmd to run test method below using #TEST.
 	public void test(String parameter, ConnectionToClient client){
-		//TODO Create object output stream and update all passing of game string stuff.
+
 		Game debug = new ChessGame("Debug");
-		TestObject test = new TestObject2("Meh");
 		
 		try{
 			client.sendToClient(debug);

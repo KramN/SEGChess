@@ -170,7 +170,7 @@ public class Server extends AbstractServer {
 
 			//Updated from System.out.println to console.display to handle other UIs
 			console.display("Message received: " + msg + " from " + client.getInfo("loginID") + "@" + client);
-			if (message.substring(0,1).equals("#")){
+			if (message.length() > 0 && message.substring(0,1).equals("#")){
 				handleCommandFromUser(message, client);
 			} else {
 				this.sendToAllClients(client.getInfo("loginID").toString() + "> " + msg);

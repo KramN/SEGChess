@@ -2,6 +2,10 @@ package general;
 
 import java.io.Serializable;
 
+/**
+ * Class that the server and client will use to execute moves.
+ * NYI
+ */
 public class Move implements Serializable {
 
 	private static final long serialVersionUID = -4921105678876999666L;

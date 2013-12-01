@@ -7,19 +7,24 @@ public class Player implements Serializable {
 	
 	private static final long serialVersionUID = 6734234661870795872L;
 	
-	// ASSOCIATIONS
-
+	//------------------------
+	// MEMBER VARIABLES
+	//------------------------
+	
+	// Player Associations
 	private Colour colour;
 	private Game game;
 	private ConnectionToClient client;
 	
 	
-	
-	//CONSTRUCTORS
+	//------------------------
+	// CONSTRUCTOR
+	//------------------------
 	public Player(Game game, ConnectionToClient client){
 		this.game = game;
 		this.client = client;
 	}
+	
 	// GETTERS
 	public Game getGame(){
 		return game;
@@ -28,8 +33,12 @@ public class Player implements Serializable {
 	public void setColour(Colour colour){
 		this.colour = colour;
 	}
+	
 	// INSTANCE METHODS
-
+	
+	/**
+	 * Sends a message to the player
+	 */
 	public void sendToPlayer(Object msg){
 		try{
 			client.sendToClient(msg);
@@ -38,7 +47,4 @@ public class Player implements Serializable {
 		}
 	}
 	
-	public void move(String move){
-		
-	}
 }

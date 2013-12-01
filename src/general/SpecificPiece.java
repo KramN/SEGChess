@@ -2,6 +2,11 @@ package general;
 
 import java.io.Serializable;
 
+/**
+ * The class used to represent an actual game piece/
+ *
+ */
+
 public class SpecificPiece implements Serializable {
 	
 	// INSTANCE VARIABLES
