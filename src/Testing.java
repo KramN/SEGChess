@@ -1,8 +1,5 @@
 import java.io.IOException;
 
-import client.ClientConsole;
-import client.GameClient;
-import server.GameServer;
 import chess.*;
 import general.*;
 
