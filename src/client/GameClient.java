@@ -84,7 +84,7 @@ public class GameClient extends AbstractClient {
 	 * Enum constants for commands from the user.
 	 */
 	private enum Command{
-		QUIT, LOGOFF, SETHOST, SETPORT, LOGIN, GETHOST, GETPORT, HELP
+		QUIT, LOGOFF, SETHOST, SETPORT, LOGON, GETHOST, GETPORT, HELP
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class GameClient extends AbstractClient {
 				clientUI.displayMessage("Must logoff before setting a new port!");
 			}
 			break;
-		case LOGIN:
+		case LOGON:
 			if (!isConnected()){
 				//Updating loginID if a new one is provided.
 				if (hasArgument){loginID = argument;}
@@ -194,7 +194,7 @@ public class GameClient extends AbstractClient {
 			}
 			try {in.close();} catch(IOException e){};
 		} catch (FileNotFoundException e){
-			clientUI.displayMessage("Help file not found");
+			clientUI.displayMessage("Help file not found. Try moving /docs to /bin or to root directory.");
 		}
 	}
 
