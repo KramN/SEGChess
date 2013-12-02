@@ -62,12 +62,11 @@ public class ClientConsole implements GameIF {
 	@Override
 	public void displayBoard(Board board) {
 		System.out.println(board.toString());
-		// TODO Auto-generated method stub
 	}
 	
 	@Override
 	public void displayMessage(Object message){
-		System.out.println(message);
+		System.out.println(message.toString());
 	}
 
 	//Class methods ***************************************************

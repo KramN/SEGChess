@@ -5,6 +5,9 @@ import java.util.List;
 import general.*;
 
 public class Pawn extends PieceType {
+
+	private static final long serialVersionUID = 4532985743443953004L;
+
 	//CONSTRUCTOR
 	public Pawn(Board board){
 		super(board);

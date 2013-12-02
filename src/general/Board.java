@@ -1,14 +1,23 @@
 package general;
 
+import java.io.Serializable;
 import java.util.*;
 
-
-public class Board {
+/**
+ * Class that represents the game board.
+ * Houses pieces and keeps track of their location on the board.
+ * Handles moving pieces about the board.
+ */
+public class Board implements Serializable {
 	
+	private static final long serialVersionUID = 1363663420719796603L;
+
+
 	//------------------------
 	// MEMBER VARIABLES
 	//------------------------
-	
+
+	// Board Attributes
 	private int rows, cols;
 
 	
@@ -17,8 +26,6 @@ public class Board {
 	private List<SpecificPiece> specificPieces;
 	protected List<PieceType> pieceTypes;
 
-	//do captured pieces remain in this list? **Yes**
-	//should the index of a given piece match the index of it's square's index in the square list? **No**
 	private Game game;
 	
 	//------------------------
@@ -36,6 +43,7 @@ public class Board {
 		setupBoard(rows, cols);
 	}
 	
+	//Initializes all squares in Board
 	private void setupBoard(int rows, int cols){
 		for (int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
@@ -45,6 +53,10 @@ public class Board {
 	}
 	
 	//GETTERS
+	
+	/**
+	 * @return the Square object at a specific coordinate
+	 */
 	public Square getSquare(int row, int col){
 		return squares[row][col];
 	}
@@ -65,23 +77,43 @@ public class Board {
 		specificPieces.add(newPiece);
 	}
 	
+	/**
+	 * Initializes all pieces for all piece types for the given game.
+	 * 
+	 * @param colourList
+	 */
 	public void init(List<Colour> colourList){
 		for (PieceType p : pieceTypes){
 			p.initialize(colourList);
 		}
 	}
 	
+	/**
+	 * Adds piece type object to the board's list.
+	 * 
+	 * @param pieceType
+	 */
 	public void addPieceType(PieceType pieceType){
 		pieceTypes.add(pieceType);
+	}
+
+	public Game getGame() {
+		return game;
+		
 	}
 	
 	
 	//INSTANCE METHODS
 	
+	/**
+	 * Moves a piece from (startX, startY) to (endX, endY)
+	 * 
+	 * @return whether the move was successful (valid) or not 
+	 */
 	public boolean movePiece(int startX, int startY, int endX, int endY){
 		// TODO This method will need a lot of checks.
 		// TODO Will need to call either the game and/or the piecetype to see if valid move
-		// TODO Must handle check/error for if no piece exists
+		
 		boolean wasMoved = false;
 		
 		if (isOutsideBoard(startX, startY, endX, endY)){
@@ -102,6 +134,9 @@ public class Board {
 		return wasMoved;
 	}
 	
+	/**
+	 * Checks if a given coordinate is outside the bounds of the board of not.
+	 */
 	private boolean isOutsideBoard(int startX, int startY, int endX, int endY){
 		if (startX < 0 ||
 				startX < 0 ||
@@ -136,6 +171,5 @@ public class Board {
 		
 		return result;
 	}
-	
 }
 

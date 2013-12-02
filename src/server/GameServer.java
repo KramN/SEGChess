@@ -7,10 +7,11 @@ import java.util.*;
 
 import general.*;
 import chess.*;
+import chess.piece.Pawn;
 
 public class GameServer extends Server {
 
-	List<Game> game;
+	private List<Game> game;
 
 	final public static String newline = System.getProperty("line.separator");
 
@@ -34,31 +35,6 @@ public class GameServer extends Server {
 	@Override
 	protected void init(){
 		game = new ArrayList<Game>();
-	}
-	
-	public static void main(String[] args) 
-	{
-		int port = 0; //Port to listen on
-
-		try
-		{
-			port = Integer.parseInt(args[0]); //Get port from command line
-		}
-		catch(Throwable t)
-		{
-			port = DEFAULT_PORT; //Set port to 5555
-		}
-
-		GameServer server = new GameServer(port);
-
-		try 
-		{
-			server.listen(); //Start listening for connections
-		} 
-		catch (Exception ex) 
-		{
-			System.out.println("ERROR - Could not listen for clients!");
-		}
 	}
 
 	/**
@@ -173,12 +149,7 @@ public class GameServer extends Server {
 			startGame(client);
 			break;
 		case TEST:
-			//TODO Create object output stream and update all passing of game string stuff.
-			try{
-				client.sendToClient(new ChessGame("Debug"));
-			} catch (IOException e){
-				console.display("TESTING FAILED");
-			}
+			test(parameter, client);
 			break;
 		default:
 			break;
@@ -218,7 +189,7 @@ public class GameServer extends Server {
 	// Starts the game if possible.
 	private void startGame(ConnectionToClient client){
 		Game theGame = getClientGame(client);
-		if (theGame == null){
+		if (theGame == null){ //Checks if the client has a game.
 			try {
 				client.sendToClient("Unable to start game. See #HELP CHESS for starting new game.");
 			} catch (IOException e){
@@ -227,7 +198,7 @@ public class GameServer extends Server {
 			return;
 		}
 		
-		if (theGame.isReadyToStart()){
+		if (theGame.isReadyToStart()){ //Checks if the game is ready to start before starting.
 			theGame.start();
 			displayAllBoard(theGame);
 		} else {
@@ -243,7 +214,7 @@ public class GameServer extends Server {
 	private void reset(ConnectionToClient client){
 		Game theGame = getClientGame(client);
 		if (hasGame(theGame, client)){
-			theGame.start();
+			theGame.restart();
 			displayAllBoard(theGame);
 		} else {
 			try {
@@ -369,11 +340,49 @@ public class GameServer extends Server {
 
 		try {
 			this.sendToAllClients(client.getInfo("loginID") + " has created new game: " + name);
-			client.sendToClient("Game started successfully." + newline + 
+			client.sendToClient("Game created successfully." + newline + 
 			"Waiting for other players.");
 		} catch (IOException e){
 			console.display("Could not send message to client: Game start.");
 		}
 
 	}
+	
+	public static void main(String[] args) 
+	{
+		int port = 0; //Port to listen on
+
+		try
+		{
+			port = Integer.parseInt(args[0]); //Get port from command line
+		}
+		catch(Throwable t)
+		{
+			port = DEFAULT_PORT; //Set port to 5555
+		}
+
+		GameServer server = new GameServer(port);
+
+		try 
+		{
+			server.listen(); //Start listening for connections
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println("ERROR - Could not listen for clients!");
+		}
+	}
+
+	//Client-cmd to run test method below using #TEST.
+	public void test(String parameter, ConnectionToClient client){
+
+		Game debug = new ChessGame("Debug");
+		
+		try{
+			client.sendToClient(debug);
+		} catch (IOException e){
+			console.display("TESTING FAILED");
+		}
+	}
+	
 }

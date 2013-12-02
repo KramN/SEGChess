@@ -1,13 +1,15 @@
 class Board{
   
-1 -- * Square;
+  1 -- * Square;
   1 -- * SpecificPiece;
+  1 -- * PieceType;
+  int rows;
+  int cols;
 }
 
 class Square{
   0..1 -- 0..1 SpecificPiece;
-  int xCoord;
-  int yCoord;
+  boolean hasPiece;
 }
 
 class SpecificPiece{
@@ -16,40 +18,39 @@ class SpecificPiece{
 }
 
 class Pawn{
-  isA SpecificPiece;
+  isA PieceType;
 }
 
 class Rook{
-  isA SpecificPiece;
+  isA PieceType;
 }
 
 class Knight{
-  isA SpecificPiece;
+  isA PieceType;
 }
 
 class Bishop{
-  isA SpecificPiece;
+  isA PieceType;
 }
 
 class Queen{
-  isA SpecificPiece;
+  isA PieceType;
 }
 
 class King{
-  isA SpecificPiece;
+  isA PieceType;
 }
 
 class Player{
   name;
-  colour;
+  
 }
 
-class Turn{
-  * -- 1 Player;
+class Colour{
+  0..1 -- 0..1 Player;
   * -- * SpecificPiece;
-  int turnNumber;
+  colourName;
 }
-
 class PieceType{
   description;
 }
@@ -57,5 +58,11 @@ class PieceType{
 class Game{
   1 -- 0..1 Board;
   * -- 0..2 Player;
+  1 -- * Colour;
   name;
+  boolean isStarted;
+}
+
+class ChessGame{
+  isA Game;
 }
