@@ -1,5 +1,6 @@
 import chess.*;
 import general.*;
+import lib.*;
 
 
 public class Testing {
@@ -19,7 +20,7 @@ public class Testing {
 		theGame.movePiece(3, 4, 7, 4);
 		System.out.println(theGame);
 		
-		theGame.movePiece(2, 4, 1, 0);
+		// TODO theGame.movePiece(2, 4, 1, 0);
 		// Test moving pieces outside board
 		try{
 			theGame.movePiece(1, 1, 9, 9);
@@ -34,5 +35,10 @@ public class Testing {
 		int endX = Integer.parseInt(testMove.substring(3,4));
 		int endY = Integer.parseInt(testMove.substring(4,5));
 		System.out.println(startX + " " + startY + " " + endX + " " + endY);
+
+        // Testing ANSI support detection and colour output.
+        String message = "Testing colour output.";
+        String colorMessage = lib.Ansi.format(message, Ansi.Color.GREEN, Ansi.Color.WHITE);
+        System.out.println(colorMessage);
 	}
 }
