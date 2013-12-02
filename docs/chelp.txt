@@ -1,7 +1,7 @@
 #HELP <item> : Access specific help files. 
   Available: chess
 #QUIT : shutdown client.
-#LOGOFF	: disconnects from current server.
+#LOGOUT	: disconnects from current server.
 #SETHOST <host> : change the current host.
 #SETPORT <port> : change the current port for server.
 #LOGIN  <ID> : logs in to the set server with optional new id.

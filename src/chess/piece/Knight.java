@@ -5,6 +5,9 @@ import java.util.List;
 import general.*;
 
 public class Knight extends PieceType {
+
+	private static final long serialVersionUID = 4214998135466620149L;
+
 	//CONSTRUCTOR
 	public Knight(Board board){
 		super(board);

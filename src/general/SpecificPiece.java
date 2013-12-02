@@ -1,8 +1,17 @@
 package general;
 
-public class SpecificPiece {
+import java.io.Serializable;
+
+/**
+ * The class used to represent an actual game piece/
+ *
+ */
+
+public class SpecificPiece implements Serializable {
 	
 	// INSTANCE VARIABLES
+	
+	private static final long serialVersionUID = 1613590067524472168L;
 	
 	//SpecificPiece Associations
 	private Square square;		// The square the piece is occupying
