@@ -1,12 +1,12 @@
-STARTING THE SYSTEM:
-	Make sure you’re in the /bin directory
+##STARTING THE SYSTEM:
+	Make sure youï¿½re in the /bin directory
 	Start server first (java server.GameServer)
 	Start client (java client.ClientConsole <id>)
 	Enjoy playing chess! Experience is better with two clients. #HELP gets you started.
 
 
-IMPROVE SYSTEM FOR FURTHER VERSIONS:
-URGENT: Display board method currents sends string representation of board.
+##IMPROVE SYSTEM FOR FURTHER VERSIONS:
+*URGENT*: Display board method currents sends string representation of board.
 	Attempt to pass objects from server to client.
 URGENT: Handle promotion/en pessant/castling.
 #start currently restarts game if already started.
