@@ -6,7 +6,7 @@
 
 
 ##IMPROVE SYSTEM FOR FURTHER VERSIONS:
-*URGENT*: Display board method currents sends string representation of board.
+<b>URGENT</b>: Display board method currents sends string representation of board.
 	Attempt to pass objects from server to client.
 URGENT: Handle promotion/en pessant/castling.
 #start currently restarts game if already started.
