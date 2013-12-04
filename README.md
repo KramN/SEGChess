@@ -6,10 +6,12 @@
 
 
 ##IMPROVE SYSTEM FOR FURTHER VERSIONS:
+Design class game as a Proxy for the entire system.
+
 <b>URGENT</b>: Display board method currents sends string representation of board.
 	Attempt to pass objects from server to client.
-URGENT: Handle promotion/en pessant/castling.
-#start currently restarts game if already started.
+<b>URGENT</b>: Handle promotion/en pessant/castling.
+start currently restarts game if already started.
 Split out UI from all the chess classes as much as possible
 
 If currently in a game, ask before starting a new game. Also lower the number of players in the old game.
